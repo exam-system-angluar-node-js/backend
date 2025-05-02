@@ -6,6 +6,17 @@ const VALID_NAME_REGEX = /^[A-Za-z]+(?:[ '\-][A-Za-z]+)*$/;
 const ROLES = ['student', 'teacher'];
 const PASSWORD_MIN_LENGTH = 6;
 
+export const loginValidators = [
+  body('email')
+    .trim()
+    .normalizeEmail()
+    .notEmpty()
+    .withMessage('Email is required')
+    .isEmail()
+    .withMessage('Invalid email format'),
+  body('password').trim().notEmpty().withMessage('Password is required'),
+];
+
 export const signupValidators = [
   body('name')
     .trim()
