@@ -1,6 +1,6 @@
 import express from 'express';
 import cookieSession from 'cookie-session';
-import { SignUpRouter } from './routes/signup';
+import { SignUpRouter, LogInRouter } from './routes/routes';
 
 const app = express();
 
@@ -13,5 +13,6 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/v1/users', SignUpRouter);
+app.use('/api/v1/users', LogInRouter);
 
 export default app;
