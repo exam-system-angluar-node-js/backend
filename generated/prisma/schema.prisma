@@ -15,11 +15,53 @@ datasource db {
 }
 
 model User {
-  id       Int    @default(autoincrement())
+  id       Int      @id @default(autoincrement())
   name     String
-  email    String @unique
+  email    String   @unique
   role     String
   password String
+  exams    Exam[]
+  results  Result[]
+}
 
-  @@map("User")
+model Exam {
+  id          Int        @id @default(autoincrement())
+  title       String
+  description String
+  startDate   DateTime
+  durration   Int
+  userId      Int
+  questions   Question[]
+  results     Result[]
+  user        User       @relation(fields: [userId], references: [id])
+}
+
+model Question {
+  id      Int      @id @default(autoincrement())
+  title   String
+  options String[]
+  points  Int
+  answer  Int
+  examId  Int
+  exam    Exam     @relation(fields: [examId], references: [id])
+}
+
+model Result {
+  id        Int             @id @default(autoincrement())
+  userId    Int
+  examId    Int
+  answers   UserExamAnswer?
+  score     Int
+  passed    Boolean
+  createdAt DateTime        @default(now())
+  user      User            @relation(fields: [userId], references: [id])
+  exam      Exam            @relation(fields: [examId], references: [id])
+}
+
+model UserExamAnswer {
+  id       Int    @id @default(autoincrement())
+  resultId Int    @unique
+  answer   String
+
+  result Result? @relation(fields: [resultId], references: [id])
 }
