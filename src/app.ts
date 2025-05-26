@@ -5,6 +5,7 @@ import cors from 'cors';
 import { AuthRouter } from './routes/auth-routes';
 import { ExamRouter } from './routes/exam-routes';
 import { QuestionRouter } from './routes/question-routes';
+import { errorHandler } from './middlewares/error-handler';
 
 const app = express();
 
@@ -20,5 +21,6 @@ app.use('/api/v1/users', AuthRouter);
 app.use('/api/v1/exams', ExamRouter);
 app.use('/api/v1/questions', QuestionRouter);
 
+app.use(errorHandler);
 
 export default app;

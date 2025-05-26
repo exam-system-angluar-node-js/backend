@@ -1,6 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
 import { PrismaClient, User } from '../../generated/prisma/index';
 import { catchAsync } from '../utils/catchAsync';
+import { BadRequestError } from '../errors/bad-request-error';
+import { ForbiddenError } from '../errors/forbidden-error';
 
 declare global {
   namespace Express {
@@ -21,30 +23,17 @@ export const addQuestionToExam = catchAsync(
     const examId = parseInt(req.params.examId);
 
     if (!examId) {
-      res.status(400).json({
-        status: 'fails',
-        message: 'provide a valid exam id',
-      });
-      return;
+      throw new BadRequestError('enter a valid exam id');
     }
 
     const exam = await prisma.exam.findUnique({ where: { id: examId } });
 
     if (!exam) {
-      res.status(400).json({
-        status: 'fails',
-        message: 'provide a valid exam id',
-      });
-      return;
+      throw new BadRequestError('enter a valid exam id');
     }
 
     if (exam.userId !== req.user?.id) {
-      res.status(403).json({
-        status: 'fails',
-        message: 'Forrbidden',
-      });
-      return;
+      throw new ForbiddenError();
     }
-    
   }
 );
