@@ -5,6 +5,8 @@ import {
   addQuestionToExam,
   getExamQuestions,
 } from '../handlers/question-handler';
+import { createQuestionValidation } from '../utils/create-question-validation';
+import { validateRequest } from '../middlewares/validateRequest';
 
 const router = express.Router();
 
@@ -12,6 +14,6 @@ router
   .route('/:examId')
   .all(protect, restrictTo('teacher', 'admin'))
   .get(getExamQuestions)
-  .post(addQuestionToExam);
+  .post(createQuestionValidation, validateRequest, addQuestionToExam);
 
 export { router as QuestionRouter };
