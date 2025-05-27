@@ -2474,6 +2474,7 @@ export namespace Prisma {
     description: string | null
     startDate: Date | null
     durration: number | null
+    category: string | null
     userId: number | null
   }
 
@@ -2483,6 +2484,7 @@ export namespace Prisma {
     description: string | null
     startDate: Date | null
     durration: number | null
+    category: string | null
     userId: number | null
   }
 
@@ -2492,6 +2494,7 @@ export namespace Prisma {
     description: number
     startDate: number
     durration: number
+    category: number
     userId: number
     _all: number
   }
@@ -2515,6 +2518,7 @@ export namespace Prisma {
     description?: true
     startDate?: true
     durration?: true
+    category?: true
     userId?: true
   }
 
@@ -2524,6 +2528,7 @@ export namespace Prisma {
     description?: true
     startDate?: true
     durration?: true
+    category?: true
     userId?: true
   }
 
@@ -2533,6 +2538,7 @@ export namespace Prisma {
     description?: true
     startDate?: true
     durration?: true
+    category?: true
     userId?: true
     _all?: true
   }
@@ -2629,6 +2635,7 @@ export namespace Prisma {
     description: string
     startDate: Date
     durration: number
+    category: string
     userId: number
     _count: ExamCountAggregateOutputType | null
     _avg: ExamAvgAggregateOutputType | null
@@ -2657,6 +2664,7 @@ export namespace Prisma {
     description?: boolean
     startDate?: boolean
     durration?: boolean
+    category?: boolean
     userId?: boolean
     questions?: boolean | Exam$questionsArgs<ExtArgs>
     results?: boolean | Exam$resultsArgs<ExtArgs>
@@ -2670,6 +2678,7 @@ export namespace Prisma {
     description?: boolean
     startDate?: boolean
     durration?: boolean
+    category?: boolean
     userId?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["exam"]>
@@ -2680,6 +2689,7 @@ export namespace Prisma {
     description?: boolean
     startDate?: boolean
     durration?: boolean
+    category?: boolean
     userId?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["exam"]>
@@ -2690,10 +2700,11 @@ export namespace Prisma {
     description?: boolean
     startDate?: boolean
     durration?: boolean
+    category?: boolean
     userId?: boolean
   }
 
-  export type ExamOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "startDate" | "durration" | "userId", ExtArgs["result"]["exam"]>
+  export type ExamOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "startDate" | "durration" | "category" | "userId", ExtArgs["result"]["exam"]>
   export type ExamInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     questions?: boolean | Exam$questionsArgs<ExtArgs>
     results?: boolean | Exam$resultsArgs<ExtArgs>
@@ -2720,6 +2731,7 @@ export namespace Prisma {
       description: string
       startDate: Date
       durration: number
+      category: string
       userId: number
     }, ExtArgs["result"]["exam"]>
     composites: {}
@@ -3152,6 +3164,7 @@ export namespace Prisma {
     readonly description: FieldRef<"Exam", 'String'>
     readonly startDate: FieldRef<"Exam", 'DateTime'>
     readonly durration: FieldRef<"Exam", 'Int'>
+    readonly category: FieldRef<"Exam", 'String'>
     readonly userId: FieldRef<"Exam", 'Int'>
   }
     
@@ -6996,6 +7009,7 @@ export namespace Prisma {
     description: 'description',
     startDate: 'startDate',
     durration: 'durration',
+    category: 'category',
     userId: 'userId'
   };
 
@@ -7191,6 +7205,7 @@ export namespace Prisma {
     description?: StringFilter<"Exam"> | string
     startDate?: DateTimeFilter<"Exam"> | Date | string
     durration?: IntFilter<"Exam"> | number
+    category?: StringFilter<"Exam"> | string
     userId?: IntFilter<"Exam"> | number
     questions?: QuestionListRelationFilter
     results?: ResultListRelationFilter
@@ -7203,6 +7218,7 @@ export namespace Prisma {
     description?: SortOrder
     startDate?: SortOrder
     durration?: SortOrder
+    category?: SortOrder
     userId?: SortOrder
     questions?: QuestionOrderByRelationAggregateInput
     results?: ResultOrderByRelationAggregateInput
@@ -7218,6 +7234,7 @@ export namespace Prisma {
     description?: StringFilter<"Exam"> | string
     startDate?: DateTimeFilter<"Exam"> | Date | string
     durration?: IntFilter<"Exam"> | number
+    category?: StringFilter<"Exam"> | string
     userId?: IntFilter<"Exam"> | number
     questions?: QuestionListRelationFilter
     results?: ResultListRelationFilter
@@ -7230,6 +7247,7 @@ export namespace Prisma {
     description?: SortOrder
     startDate?: SortOrder
     durration?: SortOrder
+    category?: SortOrder
     userId?: SortOrder
     _count?: ExamCountOrderByAggregateInput
     _avg?: ExamAvgOrderByAggregateInput
@@ -7247,6 +7265,7 @@ export namespace Prisma {
     description?: StringWithAggregatesFilter<"Exam"> | string
     startDate?: DateTimeWithAggregatesFilter<"Exam"> | Date | string
     durration?: IntWithAggregatesFilter<"Exam"> | number
+    category?: StringWithAggregatesFilter<"Exam"> | string
     userId?: IntWithAggregatesFilter<"Exam"> | number
   }
 
@@ -7493,6 +7512,7 @@ export namespace Prisma {
     description: string
     startDate: Date | string
     durration: number
+    category?: string
     questions?: QuestionCreateNestedManyWithoutExamInput
     results?: ResultCreateNestedManyWithoutExamInput
     user: UserCreateNestedOneWithoutExamsInput
@@ -7504,6 +7524,7 @@ export namespace Prisma {
     description: string
     startDate: Date | string
     durration: number
+    category?: string
     userId: number
     questions?: QuestionUncheckedCreateNestedManyWithoutExamInput
     results?: ResultUncheckedCreateNestedManyWithoutExamInput
@@ -7514,6 +7535,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     durration?: IntFieldUpdateOperationsInput | number
+    category?: StringFieldUpdateOperationsInput | string
     questions?: QuestionUpdateManyWithoutExamNestedInput
     results?: ResultUpdateManyWithoutExamNestedInput
     user?: UserUpdateOneRequiredWithoutExamsNestedInput
@@ -7525,6 +7547,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     durration?: IntFieldUpdateOperationsInput | number
+    category?: StringFieldUpdateOperationsInput | string
     userId?: IntFieldUpdateOperationsInput | number
     questions?: QuestionUncheckedUpdateManyWithoutExamNestedInput
     results?: ResultUncheckedUpdateManyWithoutExamNestedInput
@@ -7536,6 +7559,7 @@ export namespace Prisma {
     description: string
     startDate: Date | string
     durration: number
+    category?: string
     userId: number
   }
 
@@ -7544,6 +7568,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     durration?: IntFieldUpdateOperationsInput | number
+    category?: StringFieldUpdateOperationsInput | string
   }
 
   export type ExamUncheckedUpdateManyInput = {
@@ -7552,6 +7577,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     durration?: IntFieldUpdateOperationsInput | number
+    category?: StringFieldUpdateOperationsInput | string
     userId?: IntFieldUpdateOperationsInput | number
   }
 
@@ -7858,6 +7884,7 @@ export namespace Prisma {
     description?: SortOrder
     startDate?: SortOrder
     durration?: SortOrder
+    category?: SortOrder
     userId?: SortOrder
   }
 
@@ -7873,6 +7900,7 @@ export namespace Prisma {
     description?: SortOrder
     startDate?: SortOrder
     durration?: SortOrder
+    category?: SortOrder
     userId?: SortOrder
   }
 
@@ -7882,6 +7910,7 @@ export namespace Prisma {
     description?: SortOrder
     startDate?: SortOrder
     durration?: SortOrder
+    category?: SortOrder
     userId?: SortOrder
   }
 
@@ -8462,6 +8491,7 @@ export namespace Prisma {
     description: string
     startDate: Date | string
     durration: number
+    category?: string
     questions?: QuestionCreateNestedManyWithoutExamInput
     results?: ResultCreateNestedManyWithoutExamInput
   }
@@ -8472,6 +8502,7 @@ export namespace Prisma {
     description: string
     startDate: Date | string
     durration: number
+    category?: string
     questions?: QuestionUncheckedCreateNestedManyWithoutExamInput
     results?: ResultUncheckedCreateNestedManyWithoutExamInput
   }
@@ -8538,6 +8569,7 @@ export namespace Prisma {
     description?: StringFilter<"Exam"> | string
     startDate?: DateTimeFilter<"Exam"> | Date | string
     durration?: IntFilter<"Exam"> | number
+    category?: StringFilter<"Exam"> | string
     userId?: IntFilter<"Exam"> | number
   }
 
@@ -8720,6 +8752,7 @@ export namespace Prisma {
     description: string
     startDate: Date | string
     durration: number
+    category?: string
     results?: ResultCreateNestedManyWithoutExamInput
     user: UserCreateNestedOneWithoutExamsInput
   }
@@ -8730,6 +8763,7 @@ export namespace Prisma {
     description: string
     startDate: Date | string
     durration: number
+    category?: string
     userId: number
     results?: ResultUncheckedCreateNestedManyWithoutExamInput
   }
@@ -8755,6 +8789,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     durration?: IntFieldUpdateOperationsInput | number
+    category?: StringFieldUpdateOperationsInput | string
     results?: ResultUpdateManyWithoutExamNestedInput
     user?: UserUpdateOneRequiredWithoutExamsNestedInput
   }
@@ -8765,6 +8800,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     durration?: IntFieldUpdateOperationsInput | number
+    category?: StringFieldUpdateOperationsInput | string
     userId?: IntFieldUpdateOperationsInput | number
     results?: ResultUncheckedUpdateManyWithoutExamNestedInput
   }
@@ -8810,6 +8846,7 @@ export namespace Prisma {
     description: string
     startDate: Date | string
     durration: number
+    category?: string
     questions?: QuestionCreateNestedManyWithoutExamInput
     user: UserCreateNestedOneWithoutExamsInput
   }
@@ -8820,6 +8857,7 @@ export namespace Prisma {
     description: string
     startDate: Date | string
     durration: number
+    category?: string
     userId: number
     questions?: QuestionUncheckedCreateNestedManyWithoutExamInput
   }
@@ -8893,6 +8931,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     durration?: IntFieldUpdateOperationsInput | number
+    category?: StringFieldUpdateOperationsInput | string
     questions?: QuestionUpdateManyWithoutExamNestedInput
     user?: UserUpdateOneRequiredWithoutExamsNestedInput
   }
@@ -8903,6 +8942,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     durration?: IntFieldUpdateOperationsInput | number
+    category?: StringFieldUpdateOperationsInput | string
     userId?: IntFieldUpdateOperationsInput | number
     questions?: QuestionUncheckedUpdateManyWithoutExamNestedInput
   }
@@ -8963,6 +9003,7 @@ export namespace Prisma {
     description: string
     startDate: Date | string
     durration: number
+    category?: string
   }
 
   export type ResultCreateManyUserInput = {
@@ -8978,6 +9019,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     durration?: IntFieldUpdateOperationsInput | number
+    category?: StringFieldUpdateOperationsInput | string
     questions?: QuestionUpdateManyWithoutExamNestedInput
     results?: ResultUpdateManyWithoutExamNestedInput
   }
@@ -8988,6 +9030,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     durration?: IntFieldUpdateOperationsInput | number
+    category?: StringFieldUpdateOperationsInput | string
     questions?: QuestionUncheckedUpdateManyWithoutExamNestedInput
     results?: ResultUncheckedUpdateManyWithoutExamNestedInput
   }
@@ -8998,6 +9041,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     durration?: IntFieldUpdateOperationsInput | number
+    category?: StringFieldUpdateOperationsInput | string
   }
 
   export type ResultUpdateWithoutUserInput = {

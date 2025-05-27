@@ -17,4 +17,5 @@ export const createExamValidations = [
     .withMessage('Duration is required')
     .isInt({ min: 1 })
     .withMessage('Duration must be a positive integer'),
+  body('category').notEmpty().withMessage('Category is required'),
 ];
