@@ -30,6 +30,7 @@ model Exam {
   description String
   startDate   DateTime
   durration   Int
+  category    String     @default(value: "programming")
   userId      Int
   questions   Question[]
   results     Result[]

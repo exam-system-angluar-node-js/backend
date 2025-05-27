@@ -20,7 +20,7 @@ app.get('/', (req, res) => {
 app.use('/api/v1/users', AuthRouter);
 app.use('/api/v1/exams', ExamRouter);
 app.use('/api/v1/questions', QuestionRouter);
-
+  
 app.use(errorHandler);
 
 export default app;
