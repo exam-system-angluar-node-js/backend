@@ -21,22 +21,59 @@ export const getExamQuestions = catchAsync(
     if (!examId) {
       throw new BadRequestError('enter a valid exam id');
     }
+
     const exam = await prisma.exam.findUnique({ where: { id: examId } });
     if (!exam) {
       throw new BadRequestError('enter a valid exam id');
     }
-    if (exam.userId !== req.user?.id) {
+
+    const userRole = req.user?.role;
+    const userId = req.user?.id;
+
+    // Check permissions based on user role
+    if (userRole === 'teacher' || userRole === 'admin') {
+      // Teachers/admins can only access their own exams
+      if (exam.userId !== userId) {
+        throw new ForbiddenError();
+      }
+    } else if (userRole === 'student') {
+      // Students can access questions if they have an active exam session
+      const activeResult = await prisma.result.findFirst({
+        where: {
+          userId,
+          examId,
+        },
+      });
+
+      if (!activeResult) {
+        throw new ForbiddenError('You must start the exam first');
+      }
+
+      // Check if exam has started
+      const now = new Date();
+      const examStartDate = new Date(exam.startDate);
+
+      if (examStartDate > now) {
+        throw new ForbiddenError('Exam has not started yet');
+      }
+    } else {
       throw new ForbiddenError();
     }
 
-    const question = await prisma.question.findMany({
+    const questions = await prisma.question.findMany({
       where: { examId },
+      select: {
+        id: true,
+        title: true,
+        options: true,
+        points: true,
+        examId: true,
+        // Include answer only for teachers/admins
+        ...(userRole === 'student' ? {} : { answer: true }),
+      },
     });
 
-    res.json({
-      status: 'success',
-      question,
-    });
+    res.json(questions);
   }
 );
 
@@ -54,22 +91,25 @@ export const addQuestionToExam = catchAsync(
     if (exam.userId !== req.user?.id) {
       throw new ForbiddenError();
     }
+    const questions = req.body.questions;
 
-    const { title, options, points, answer } = req.body;
+    if (!Array.isArray(questions) || questions.length === 0) {
+      throw new BadRequestError('Questions must be a non-empty array');
+    }
 
-    const question = await prisma.question.create({
-      data: {
-        title,
-        options,
-        points,
-        answer,
+    const createdQuestions = await prisma.question.createMany({
+      data: questions.map((q) => ({
+        title: q.title,
+        options: q.options,
+        points: q.points,
+        answer: q.answer,
         examId,
-      },
+      })),
     });
 
     res.status(201).json({
-      status: 'succes',
-      question,
+      status: 'success',
+      message: `${createdQuestions.count} questions added`,
     });
   }
 );

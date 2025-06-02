@@ -2458,13 +2458,13 @@ export namespace Prisma {
 
   export type ExamAvgAggregateOutputType = {
     id: number | null
-    durration: number | null
+    duration: number | null
     userId: number | null
   }
 
   export type ExamSumAggregateOutputType = {
     id: number | null
-    durration: number | null
+    duration: number | null
     userId: number | null
   }
 
@@ -2473,9 +2473,12 @@ export namespace Prisma {
     title: string | null
     description: string | null
     startDate: Date | null
-    durration: number | null
+    duration: number | null
     category: string | null
+    status: string | null
     userId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
   }
 
   export type ExamMaxAggregateOutputType = {
@@ -2483,9 +2486,12 @@ export namespace Prisma {
     title: string | null
     description: string | null
     startDate: Date | null
-    durration: number | null
+    duration: number | null
     category: string | null
+    status: string | null
     userId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
   }
 
   export type ExamCountAggregateOutputType = {
@@ -2493,22 +2499,25 @@ export namespace Prisma {
     title: number
     description: number
     startDate: number
-    durration: number
+    duration: number
     category: number
+    status: number
     userId: number
+    createdAt: number
+    updatedAt: number
     _all: number
   }
 
 
   export type ExamAvgAggregateInputType = {
     id?: true
-    durration?: true
+    duration?: true
     userId?: true
   }
 
   export type ExamSumAggregateInputType = {
     id?: true
-    durration?: true
+    duration?: true
     userId?: true
   }
 
@@ -2517,9 +2526,12 @@ export namespace Prisma {
     title?: true
     description?: true
     startDate?: true
-    durration?: true
+    duration?: true
     category?: true
+    status?: true
     userId?: true
+    createdAt?: true
+    updatedAt?: true
   }
 
   export type ExamMaxAggregateInputType = {
@@ -2527,9 +2539,12 @@ export namespace Prisma {
     title?: true
     description?: true
     startDate?: true
-    durration?: true
+    duration?: true
     category?: true
+    status?: true
     userId?: true
+    createdAt?: true
+    updatedAt?: true
   }
 
   export type ExamCountAggregateInputType = {
@@ -2537,9 +2552,12 @@ export namespace Prisma {
     title?: true
     description?: true
     startDate?: true
-    durration?: true
+    duration?: true
     category?: true
+    status?: true
     userId?: true
+    createdAt?: true
+    updatedAt?: true
     _all?: true
   }
 
@@ -2634,9 +2652,12 @@ export namespace Prisma {
     title: string
     description: string
     startDate: Date
-    durration: number
+    duration: number
     category: string
+    status: string
     userId: number
+    createdAt: Date
+    updatedAt: Date
     _count: ExamCountAggregateOutputType | null
     _avg: ExamAvgAggregateOutputType | null
     _sum: ExamSumAggregateOutputType | null
@@ -2663,12 +2684,15 @@ export namespace Prisma {
     title?: boolean
     description?: boolean
     startDate?: boolean
-    durration?: boolean
+    duration?: boolean
     category?: boolean
+    status?: boolean
     userId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
     questions?: boolean | Exam$questionsArgs<ExtArgs>
     results?: boolean | Exam$resultsArgs<ExtArgs>
-    user?: boolean | UserDefaultArgs<ExtArgs>
     _count?: boolean | ExamCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["exam"]>
 
@@ -2677,9 +2701,12 @@ export namespace Prisma {
     title?: boolean
     description?: boolean
     startDate?: boolean
-    durration?: boolean
+    duration?: boolean
     category?: boolean
+    status?: boolean
     userId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["exam"]>
 
@@ -2688,9 +2715,12 @@ export namespace Prisma {
     title?: boolean
     description?: boolean
     startDate?: boolean
-    durration?: boolean
+    duration?: boolean
     category?: boolean
+    status?: boolean
     userId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["exam"]>
 
@@ -2699,16 +2729,19 @@ export namespace Prisma {
     title?: boolean
     description?: boolean
     startDate?: boolean
-    durration?: boolean
+    duration?: boolean
     category?: boolean
+    status?: boolean
     userId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
   }
 
-  export type ExamOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "startDate" | "durration" | "category" | "userId", ExtArgs["result"]["exam"]>
+  export type ExamOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "startDate" | "duration" | "category" | "status" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["exam"]>
   export type ExamInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
     questions?: boolean | Exam$questionsArgs<ExtArgs>
     results?: boolean | Exam$resultsArgs<ExtArgs>
-    user?: boolean | UserDefaultArgs<ExtArgs>
     _count?: boolean | ExamCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ExamIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2721,18 +2754,21 @@ export namespace Prisma {
   export type $ExamPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Exam"
     objects: {
+      user: Prisma.$UserPayload<ExtArgs>
       questions: Prisma.$QuestionPayload<ExtArgs>[]
       results: Prisma.$ResultPayload<ExtArgs>[]
-      user: Prisma.$UserPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
       title: string
       description: string
       startDate: Date
-      durration: number
+      duration: number
       category: string
+      status: string
       userId: number
+      createdAt: Date
+      updatedAt: Date
     }, ExtArgs["result"]["exam"]>
     composites: {}
   }
@@ -3127,9 +3163,9 @@ export namespace Prisma {
    */
   export interface Prisma__ExamClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     questions<T extends Exam$questionsArgs<ExtArgs> = {}>(args?: Subset<T, Exam$questionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$QuestionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     results<T extends Exam$resultsArgs<ExtArgs> = {}>(args?: Subset<T, Exam$resultsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ResultPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3163,9 +3199,12 @@ export namespace Prisma {
     readonly title: FieldRef<"Exam", 'String'>
     readonly description: FieldRef<"Exam", 'String'>
     readonly startDate: FieldRef<"Exam", 'DateTime'>
-    readonly durration: FieldRef<"Exam", 'Int'>
+    readonly duration: FieldRef<"Exam", 'Int'>
     readonly category: FieldRef<"Exam", 'String'>
+    readonly status: FieldRef<"Exam", 'String'>
     readonly userId: FieldRef<"Exam", 'Int'>
+    readonly createdAt: FieldRef<"Exam", 'DateTime'>
+    readonly updatedAt: FieldRef<"Exam", 'DateTime'>
   }
     
 
@@ -7008,9 +7047,12 @@ export namespace Prisma {
     title: 'title',
     description: 'description',
     startDate: 'startDate',
-    durration: 'durration',
+    duration: 'duration',
     category: 'category',
-    userId: 'userId'
+    status: 'status',
+    userId: 'userId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
   };
 
   export type ExamScalarFieldEnum = (typeof ExamScalarFieldEnum)[keyof typeof ExamScalarFieldEnum]
@@ -7204,12 +7246,15 @@ export namespace Prisma {
     title?: StringFilter<"Exam"> | string
     description?: StringFilter<"Exam"> | string
     startDate?: DateTimeFilter<"Exam"> | Date | string
-    durration?: IntFilter<"Exam"> | number
+    duration?: IntFilter<"Exam"> | number
     category?: StringFilter<"Exam"> | string
+    status?: StringFilter<"Exam"> | string
     userId?: IntFilter<"Exam"> | number
+    createdAt?: DateTimeFilter<"Exam"> | Date | string
+    updatedAt?: DateTimeFilter<"Exam"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
     questions?: QuestionListRelationFilter
     results?: ResultListRelationFilter
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
   export type ExamOrderByWithRelationInput = {
@@ -7217,12 +7262,15 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrder
     startDate?: SortOrder
-    durration?: SortOrder
+    duration?: SortOrder
     category?: SortOrder
+    status?: SortOrder
     userId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    user?: UserOrderByWithRelationInput
     questions?: QuestionOrderByRelationAggregateInput
     results?: ResultOrderByRelationAggregateInput
-    user?: UserOrderByWithRelationInput
   }
 
   export type ExamWhereUniqueInput = Prisma.AtLeast<{
@@ -7233,12 +7281,15 @@ export namespace Prisma {
     title?: StringFilter<"Exam"> | string
     description?: StringFilter<"Exam"> | string
     startDate?: DateTimeFilter<"Exam"> | Date | string
-    durration?: IntFilter<"Exam"> | number
+    duration?: IntFilter<"Exam"> | number
     category?: StringFilter<"Exam"> | string
+    status?: StringFilter<"Exam"> | string
     userId?: IntFilter<"Exam"> | number
+    createdAt?: DateTimeFilter<"Exam"> | Date | string
+    updatedAt?: DateTimeFilter<"Exam"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
     questions?: QuestionListRelationFilter
     results?: ResultListRelationFilter
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id">
 
   export type ExamOrderByWithAggregationInput = {
@@ -7246,9 +7297,12 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrder
     startDate?: SortOrder
-    durration?: SortOrder
+    duration?: SortOrder
     category?: SortOrder
+    status?: SortOrder
     userId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
     _count?: ExamCountOrderByAggregateInput
     _avg?: ExamAvgOrderByAggregateInput
     _max?: ExamMaxOrderByAggregateInput
@@ -7264,9 +7318,12 @@ export namespace Prisma {
     title?: StringWithAggregatesFilter<"Exam"> | string
     description?: StringWithAggregatesFilter<"Exam"> | string
     startDate?: DateTimeWithAggregatesFilter<"Exam"> | Date | string
-    durration?: IntWithAggregatesFilter<"Exam"> | number
+    duration?: IntWithAggregatesFilter<"Exam"> | number
     category?: StringWithAggregatesFilter<"Exam"> | string
+    status?: StringWithAggregatesFilter<"Exam"> | string
     userId?: IntWithAggregatesFilter<"Exam"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"Exam"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Exam"> | Date | string
   }
 
   export type QuestionWhereInput = {
@@ -7511,11 +7568,14 @@ export namespace Prisma {
     title: string
     description: string
     startDate: Date | string
-    durration: number
-    category?: string
+    duration: number
+    category: string
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutExamsInput
     questions?: QuestionCreateNestedManyWithoutExamInput
     results?: ResultCreateNestedManyWithoutExamInput
-    user: UserCreateNestedOneWithoutExamsInput
   }
 
   export type ExamUncheckedCreateInput = {
@@ -7523,9 +7583,12 @@ export namespace Prisma {
     title: string
     description: string
     startDate: Date | string
-    durration: number
-    category?: string
+    duration: number
+    category: string
+    status?: string
     userId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
     questions?: QuestionUncheckedCreateNestedManyWithoutExamInput
     results?: ResultUncheckedCreateNestedManyWithoutExamInput
   }
@@ -7534,11 +7597,14 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    durration?: IntFieldUpdateOperationsInput | number
+    duration?: IntFieldUpdateOperationsInput | number
     category?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutExamsNestedInput
     questions?: QuestionUpdateManyWithoutExamNestedInput
     results?: ResultUpdateManyWithoutExamNestedInput
-    user?: UserUpdateOneRequiredWithoutExamsNestedInput
   }
 
   export type ExamUncheckedUpdateInput = {
@@ -7546,9 +7612,12 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    durration?: IntFieldUpdateOperationsInput | number
+    duration?: IntFieldUpdateOperationsInput | number
     category?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     userId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     questions?: QuestionUncheckedUpdateManyWithoutExamNestedInput
     results?: ResultUncheckedUpdateManyWithoutExamNestedInput
   }
@@ -7558,17 +7627,23 @@ export namespace Prisma {
     title: string
     description: string
     startDate: Date | string
-    durration: number
-    category?: string
+    duration: number
+    category: string
+    status?: string
     userId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type ExamUpdateManyMutationInput = {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    durration?: IntFieldUpdateOperationsInput | number
+    duration?: IntFieldUpdateOperationsInput | number
     category?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ExamUncheckedUpdateManyInput = {
@@ -7576,9 +7651,12 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    durration?: IntFieldUpdateOperationsInput | number
+    duration?: IntFieldUpdateOperationsInput | number
     category?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     userId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type QuestionCreateInput = {
@@ -7863,15 +7941,15 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type UserScalarRelationFilter = {
+    is?: UserWhereInput
+    isNot?: UserWhereInput
+  }
+
   export type QuestionListRelationFilter = {
     every?: QuestionWhereInput
     some?: QuestionWhereInput
     none?: QuestionWhereInput
-  }
-
-  export type UserScalarRelationFilter = {
-    is?: UserWhereInput
-    isNot?: UserWhereInput
   }
 
   export type QuestionOrderByRelationAggregateInput = {
@@ -7883,14 +7961,17 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrder
     startDate?: SortOrder
-    durration?: SortOrder
+    duration?: SortOrder
     category?: SortOrder
+    status?: SortOrder
     userId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type ExamAvgOrderByAggregateInput = {
     id?: SortOrder
-    durration?: SortOrder
+    duration?: SortOrder
     userId?: SortOrder
   }
 
@@ -7899,9 +7980,12 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrder
     startDate?: SortOrder
-    durration?: SortOrder
+    duration?: SortOrder
     category?: SortOrder
+    status?: SortOrder
     userId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type ExamMinOrderByAggregateInput = {
@@ -7909,14 +7993,17 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrder
     startDate?: SortOrder
-    durration?: SortOrder
+    duration?: SortOrder
     category?: SortOrder
+    status?: SortOrder
     userId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type ExamSumOrderByAggregateInput = {
     id?: SortOrder
-    durration?: SortOrder
+    duration?: SortOrder
     userId?: SortOrder
   }
 
@@ -8174,6 +8261,12 @@ export namespace Prisma {
     deleteMany?: ResultScalarWhereInput | ResultScalarWhereInput[]
   }
 
+  export type UserCreateNestedOneWithoutExamsInput = {
+    create?: XOR<UserCreateWithoutExamsInput, UserUncheckedCreateWithoutExamsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutExamsInput
+    connect?: UserWhereUniqueInput
+  }
+
   export type QuestionCreateNestedManyWithoutExamInput = {
     create?: XOR<QuestionCreateWithoutExamInput, QuestionUncheckedCreateWithoutExamInput> | QuestionCreateWithoutExamInput[] | QuestionUncheckedCreateWithoutExamInput[]
     connectOrCreate?: QuestionCreateOrConnectWithoutExamInput | QuestionCreateOrConnectWithoutExamInput[]
@@ -8186,12 +8279,6 @@ export namespace Prisma {
     connectOrCreate?: ResultCreateOrConnectWithoutExamInput | ResultCreateOrConnectWithoutExamInput[]
     createMany?: ResultCreateManyExamInputEnvelope
     connect?: ResultWhereUniqueInput | ResultWhereUniqueInput[]
-  }
-
-  export type UserCreateNestedOneWithoutExamsInput = {
-    create?: XOR<UserCreateWithoutExamsInput, UserUncheckedCreateWithoutExamsInput>
-    connectOrCreate?: UserCreateOrConnectWithoutExamsInput
-    connect?: UserWhereUniqueInput
   }
 
   export type QuestionUncheckedCreateNestedManyWithoutExamInput = {
@@ -8210,6 +8297,14 @@ export namespace Prisma {
 
   export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string
+  }
+
+  export type UserUpdateOneRequiredWithoutExamsNestedInput = {
+    create?: XOR<UserCreateWithoutExamsInput, UserUncheckedCreateWithoutExamsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutExamsInput
+    upsert?: UserUpsertWithoutExamsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutExamsInput, UserUpdateWithoutExamsInput>, UserUncheckedUpdateWithoutExamsInput>
   }
 
   export type QuestionUpdateManyWithoutExamNestedInput = {
@@ -8238,14 +8333,6 @@ export namespace Prisma {
     update?: ResultUpdateWithWhereUniqueWithoutExamInput | ResultUpdateWithWhereUniqueWithoutExamInput[]
     updateMany?: ResultUpdateManyWithWhereWithoutExamInput | ResultUpdateManyWithWhereWithoutExamInput[]
     deleteMany?: ResultScalarWhereInput | ResultScalarWhereInput[]
-  }
-
-  export type UserUpdateOneRequiredWithoutExamsNestedInput = {
-    create?: XOR<UserCreateWithoutExamsInput, UserUncheckedCreateWithoutExamsInput>
-    connectOrCreate?: UserCreateOrConnectWithoutExamsInput
-    upsert?: UserUpsertWithoutExamsInput
-    connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutExamsInput, UserUpdateWithoutExamsInput>, UserUncheckedUpdateWithoutExamsInput>
   }
 
   export type QuestionUncheckedUpdateManyWithoutExamNestedInput = {
@@ -8490,8 +8577,11 @@ export namespace Prisma {
     title: string
     description: string
     startDate: Date | string
-    durration: number
-    category?: string
+    duration: number
+    category: string
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
     questions?: QuestionCreateNestedManyWithoutExamInput
     results?: ResultCreateNestedManyWithoutExamInput
   }
@@ -8501,8 +8591,11 @@ export namespace Prisma {
     title: string
     description: string
     startDate: Date | string
-    durration: number
-    category?: string
+    duration: number
+    category: string
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
     questions?: QuestionUncheckedCreateNestedManyWithoutExamInput
     results?: ResultUncheckedCreateNestedManyWithoutExamInput
   }
@@ -8568,9 +8661,12 @@ export namespace Prisma {
     title?: StringFilter<"Exam"> | string
     description?: StringFilter<"Exam"> | string
     startDate?: DateTimeFilter<"Exam"> | Date | string
-    durration?: IntFilter<"Exam"> | number
+    duration?: IntFilter<"Exam"> | number
     category?: StringFilter<"Exam"> | string
+    status?: StringFilter<"Exam"> | string
     userId?: IntFilter<"Exam"> | number
+    createdAt?: DateTimeFilter<"Exam"> | Date | string
+    updatedAt?: DateTimeFilter<"Exam"> | Date | string
   }
 
   export type ResultUpsertWithWhereUniqueWithoutUserInput = {
@@ -8599,6 +8695,28 @@ export namespace Prisma {
     score?: IntFilter<"Result"> | number
     passed?: BoolFilter<"Result"> | boolean
     createdAt?: DateTimeFilter<"Result"> | Date | string
+  }
+
+  export type UserCreateWithoutExamsInput = {
+    name: string
+    email: string
+    role: string
+    password: string
+    results?: ResultCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutExamsInput = {
+    id?: number
+    name: string
+    email: string
+    role: string
+    password: string
+    results?: ResultUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutExamsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutExamsInput, UserUncheckedCreateWithoutExamsInput>
   }
 
   export type QuestionCreateWithoutExamInput = {
@@ -8653,26 +8771,32 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type UserCreateWithoutExamsInput = {
-    name: string
-    email: string
-    role: string
-    password: string
-    results?: ResultCreateNestedManyWithoutUserInput
-  }
-
-  export type UserUncheckedCreateWithoutExamsInput = {
-    id?: number
-    name: string
-    email: string
-    role: string
-    password: string
-    results?: ResultUncheckedCreateNestedManyWithoutUserInput
-  }
-
-  export type UserCreateOrConnectWithoutExamsInput = {
-    where: UserWhereUniqueInput
+  export type UserUpsertWithoutExamsInput = {
+    update: XOR<UserUpdateWithoutExamsInput, UserUncheckedUpdateWithoutExamsInput>
     create: XOR<UserCreateWithoutExamsInput, UserUncheckedCreateWithoutExamsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutExamsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutExamsInput, UserUncheckedUpdateWithoutExamsInput>
+  }
+
+  export type UserUpdateWithoutExamsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    results?: ResultUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutExamsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    results?: ResultUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type QuestionUpsertWithWhereUniqueWithoutExamInput = {
@@ -8719,42 +8843,17 @@ export namespace Prisma {
     data: XOR<ResultUpdateManyMutationInput, ResultUncheckedUpdateManyWithoutExamInput>
   }
 
-  export type UserUpsertWithoutExamsInput = {
-    update: XOR<UserUpdateWithoutExamsInput, UserUncheckedUpdateWithoutExamsInput>
-    create: XOR<UserCreateWithoutExamsInput, UserUncheckedCreateWithoutExamsInput>
-    where?: UserWhereInput
-  }
-
-  export type UserUpdateToOneWithWhereWithoutExamsInput = {
-    where?: UserWhereInput
-    data: XOR<UserUpdateWithoutExamsInput, UserUncheckedUpdateWithoutExamsInput>
-  }
-
-  export type UserUpdateWithoutExamsInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    role?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    results?: ResultUpdateManyWithoutUserNestedInput
-  }
-
-  export type UserUncheckedUpdateWithoutExamsInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    role?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    results?: ResultUncheckedUpdateManyWithoutUserNestedInput
-  }
-
   export type ExamCreateWithoutQuestionsInput = {
     title: string
     description: string
     startDate: Date | string
-    durration: number
-    category?: string
-    results?: ResultCreateNestedManyWithoutExamInput
+    duration: number
+    category: string
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
     user: UserCreateNestedOneWithoutExamsInput
+    results?: ResultCreateNestedManyWithoutExamInput
   }
 
   export type ExamUncheckedCreateWithoutQuestionsInput = {
@@ -8762,9 +8861,12 @@ export namespace Prisma {
     title: string
     description: string
     startDate: Date | string
-    durration: number
-    category?: string
+    duration: number
+    category: string
+    status?: string
     userId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
     results?: ResultUncheckedCreateNestedManyWithoutExamInput
   }
 
@@ -8788,10 +8890,13 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    durration?: IntFieldUpdateOperationsInput | number
+    duration?: IntFieldUpdateOperationsInput | number
     category?: StringFieldUpdateOperationsInput | string
-    results?: ResultUpdateManyWithoutExamNestedInput
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutExamsNestedInput
+    results?: ResultUpdateManyWithoutExamNestedInput
   }
 
   export type ExamUncheckedUpdateWithoutQuestionsInput = {
@@ -8799,9 +8904,12 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    durration?: IntFieldUpdateOperationsInput | number
+    duration?: IntFieldUpdateOperationsInput | number
     category?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     userId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     results?: ResultUncheckedUpdateManyWithoutExamNestedInput
   }
 
@@ -8845,10 +8953,13 @@ export namespace Prisma {
     title: string
     description: string
     startDate: Date | string
-    durration: number
-    category?: string
-    questions?: QuestionCreateNestedManyWithoutExamInput
+    duration: number
+    category: string
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
     user: UserCreateNestedOneWithoutExamsInput
+    questions?: QuestionCreateNestedManyWithoutExamInput
   }
 
   export type ExamUncheckedCreateWithoutResultsInput = {
@@ -8856,9 +8967,12 @@ export namespace Prisma {
     title: string
     description: string
     startDate: Date | string
-    durration: number
-    category?: string
+    duration: number
+    category: string
+    status?: string
     userId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
     questions?: QuestionUncheckedCreateNestedManyWithoutExamInput
   }
 
@@ -8930,10 +9044,13 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    durration?: IntFieldUpdateOperationsInput | number
+    duration?: IntFieldUpdateOperationsInput | number
     category?: StringFieldUpdateOperationsInput | string
-    questions?: QuestionUpdateManyWithoutExamNestedInput
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutExamsNestedInput
+    questions?: QuestionUpdateManyWithoutExamNestedInput
   }
 
   export type ExamUncheckedUpdateWithoutResultsInput = {
@@ -8941,9 +9058,12 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    durration?: IntFieldUpdateOperationsInput | number
+    duration?: IntFieldUpdateOperationsInput | number
     category?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     userId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     questions?: QuestionUncheckedUpdateManyWithoutExamNestedInput
   }
 
@@ -9002,8 +9122,11 @@ export namespace Prisma {
     title: string
     description: string
     startDate: Date | string
-    durration: number
-    category?: string
+    duration: number
+    category: string
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type ResultCreateManyUserInput = {
@@ -9018,8 +9141,11 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    durration?: IntFieldUpdateOperationsInput | number
+    duration?: IntFieldUpdateOperationsInput | number
     category?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     questions?: QuestionUpdateManyWithoutExamNestedInput
     results?: ResultUpdateManyWithoutExamNestedInput
   }
@@ -9029,8 +9155,11 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    durration?: IntFieldUpdateOperationsInput | number
+    duration?: IntFieldUpdateOperationsInput | number
     category?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     questions?: QuestionUncheckedUpdateManyWithoutExamNestedInput
     results?: ResultUncheckedUpdateManyWithoutExamNestedInput
   }
@@ -9040,8 +9169,11 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    durration?: IntFieldUpdateOperationsInput | number
+    duration?: IntFieldUpdateOperationsInput | number
     category?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ResultUpdateWithoutUserInput = {

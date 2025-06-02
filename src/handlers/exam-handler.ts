@@ -16,38 +16,80 @@ declare global {
   }
 }
 
+// GET /api/v1/exams
 export const getAllExamsHandler = catchAsync(
   async (req: Request, res: Response) => {
-    const exams = await prisma.exam.findMany();
+    const exams = await prisma.exam.findMany({
+      include: {
+        questions: true,
+        user: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            // Add firstName, lastName if applicable
+          },
+        },
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
 
-    if (!exams) {
-      res.json({
-        status: 'sucess',
-        message: 'there is no avaliable exams right now ',
-      });
+    const transformedExams = exams.map((exam) => ({
+      id: exam.id,
+      title: exam.title,
+      description: exam.description,
+      category: exam.category,
+      duration: exam.duration,
+      questionsCount: exam.questions.length,
+      createdAt: exam.createdAt,
+      updatedAt: exam.updatedAt,
+      instructorName: exam.user?.name || 'Unknown Instructor',
+      instructor: {
+        id: exam.user?.id,
+        name: exam.user?.name,
+        email: exam.user?.email,
+        firstName: '', // Fill if you have these fields
+        lastName: '', // Fill if you have these fields
+      },
+    }));
+
+    res.status(200).json(transformedExams);
+  }
+);
+
+export const getAllTeacherExamsHandler = catchAsync(
+  async (req: Request, res: Response) => {
+    const teacherId = req.user?.id;
+
+    const exams = await prisma.exam.findMany({
+      where: { userId: teacherId },
+      include: { questions: true },
+    });
+
+    if (!exams || exams.length === 0) {
+      res.json([]);
       return;
     }
 
-    res.json({
-      status: 'success',
-      exams,
-    });
+    res.json(exams);
   }
 );
 
 export const createNewExamHandler = catchAsync(
   async (req: Request, res: Response) => {
-    const { title, description, startDate, durration, category } = req.body;
-
+    const { title, description, startDate, duration, category } = req.body;
     const userId = req.user?.id;
 
     const examData: any = {
       title,
       description,
       startDate,
-      durration,
+      duration,
       category,
     };
+
     if (userId !== undefined) examData.userId = userId;
 
     const newExam = await prisma.exam.create({
@@ -61,10 +103,99 @@ export const createNewExamHandler = catchAsync(
   }
 );
 
+export const editExamHandler = catchAsync(
+  async (req: Request, res: Response) => {
+    const examId = parseInt(req.params.examId);
+    const userId = req.user?.id;
+
+    if (!userId) {
+      throw new BadRequestError('User not authenticated');
+    }
+
+    const existingExam = await prisma.exam.findUnique({
+      where: { id: examId },
+    });
+
+    if (!existingExam) {
+      throw new NotFoundError();
+    }
+
+    if (existingExam.userId !== userId) {
+      throw new BadRequestError('You do not have permission to edit this exam');
+    }
+
+    const { title, description, timeLimit } = req.body;
+
+    const updatedExam = await prisma.exam.update({
+      where: { id: examId },
+      data: {
+        title,
+        description,
+        duration: timeLimit, // ✅ Fixed typo here
+      },
+    });
+
+    res.status(200).json({
+      status: 'success',
+      message: 'Exam updated successfully',
+      data: updatedExam,
+    });
+  }
+);
+
+export const getExamById = catchAsync(async (req: Request, res: Response) => {
+  const examId = parseInt(req.params.examId);
+
+  const exam = await prisma.exam.findUnique({
+    where: { id: examId },
+    include: { questions: true },
+  });
+
+  if (!exam) throw new NotFoundError();
+
+  // Remove answers for students
+  if (req.user?.role === 'student') {
+    const examWithoutAnswers = {
+      ...exam,
+      questions: exam.questions.map((question) => {
+        const { answer, ...safeQuestion } = question;
+        return safeQuestion;
+      }),
+    };
+    return res.status(200).json(examWithoutAnswers);
+  }
+
+  res.status(200).json(exam);
+});
+
+// export const getExamById = catchAsync(async (req: Request, res: Response) => {
+//   const examId = parseInt(req.params.examId);
+//   const userId = req.user?.id;
+
+//   const exam = await prisma.exam.findUnique({
+//     where: { id: examId },
+//     include: { questions: true },
+//   });
+
+//   if (!exam) {
+//     throw new NotFoundError();
+//   }
+
+//   if (userId === undefined) {
+//     throw new BadRequestError('Provide valid user id');
+//   }
+
+//   res.status(200).json(exam);
+// });
+
 export const takeExamHandler = catchAsync(
   async (req: Request, res: Response) => {
     const examId = parseInt(req.params.examId);
     const userId = req.user?.id;
+
+    if (userId === undefined) {
+      throw new BadRequestError('Provide valid user id');
+    }
 
     const exam = await prisma.exam.findUnique({
       where: { id: examId },
@@ -75,25 +206,38 @@ export const takeExamHandler = catchAsync(
       throw new NotFoundError();
     }
 
+    const now = new Date();
+    const examStartDate = new Date(exam.startDate);
+
+    if (examStartDate > now) {
+      throw new ForbiddenError('Exam has not started yet');
+    }
+
+    // Check if user has already taken this exam
     const existingResult = await prisma.result.findFirst({
-      where: { userId, examId },
+      where: {
+        userId,
+        examId,
+      },
     });
 
     if (existingResult) {
-      throw new ForbiddenError();
+      const hasAnswers = await prisma.userExamAnswer.findFirst({
+        where: { resultId: existingResult.id },
+      });
+
+      if (hasAnswers) {
+        throw new ForbiddenError('You have already completed this exam');
+      } else {
+        return res.status(200).json({
+          status: 'success',
+          resultId: existingResult.id,
+          message: 'Continuing existing exam session',
+        });
+      }
     }
 
-    const date = new Date();
-    const examStartDate = new Date(exam.startDate);
-
-    if (examStartDate > date) {
-      throw new ForbiddenError();
-    }
-
-    if (userId === undefined) {
-      throw new BadRequestError('provide valid user id');
-    }
-
+    // Create new result record
     const result = await prisma.result.create({
       data: {
         userId,
@@ -103,9 +247,16 @@ export const takeExamHandler = catchAsync(
       },
     });
 
+    // Return exam without correct answers
+    const examWithoutAnswers = {
+      ...exam,
+      questions: exam.questions.map(({ answer, ...rest }) => rest),
+    };
+
     res.status(200).json({
       status: 'success',
       resultId: result.id,
+      exam: examWithoutAnswers,
     });
   }
 );
@@ -117,7 +268,7 @@ export const submitExam = catchAsync(async (req: Request, res: Response) => {
   });
 
   if (!result) {
-    throw new BadRequestError('provide a valida result id');
+    throw new BadRequestError('Provide a valid result id');
   }
 
   if (result.userId !== req.user?.id) {
@@ -170,3 +321,62 @@ export const submitExam = catchAsync(async (req: Request, res: Response) => {
     result: updatedResult,
   });
 });
+
+// Add this handler to your exam-handler.ts file
+
+export const getExamResultHandler = catchAsync(
+  async (req: Request, res: Response) => {
+    const examId = parseInt(req.params.examId);
+    const userId = parseInt(req.params.userId);
+
+    if (!userId || !examId) {
+      throw new BadRequestError('Valid exam ID and user ID are required');
+    }
+
+    // Check if the user requesting is the same as the result owner or an admin/teacher
+    if (
+      req.user?.id !== userId &&
+      req.user?.role !== 'admin' &&
+      req.user?.role !== 'teacher'
+    ) {
+      throw new NotAuthorizedError();
+    }
+
+    // Find the result for this user and exam
+    const result = await prisma.result.findFirst({
+      where: {
+        userId: userId,
+        examId: examId,
+      },
+      include: {
+        answers: true,
+        exam: {
+          include: {
+            questions: true,
+          },
+        },
+        user: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+          },
+        },
+      },
+    });
+
+    if (!result) {
+      throw new NotFoundError();
+    }
+
+    // Check if the exam has been submitted (has answers)
+    if (!result.answers) {
+      throw new BadRequestError('Exam has not been completed yet');
+    }
+
+    res.status(200).json({
+      status: 'success',
+      data: result,
+    });
+  }
+);

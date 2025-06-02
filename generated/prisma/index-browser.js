@@ -133,9 +133,12 @@ exports.Prisma.ExamScalarFieldEnum = {
   title: 'title',
   description: 'description',
   startDate: 'startDate',
-  durration: 'durration',
+  duration: 'duration',
   category: 'category',
-  userId: 'userId'
+  status: 'status',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.QuestionScalarFieldEnum = {

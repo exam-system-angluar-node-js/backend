@@ -12,8 +12,13 @@ const router = express.Router();
 
 router
   .route('/:examId')
-  .all(protect, restrictTo('teacher', 'admin'))
-  .get(getExamQuestions)
-  .post(createQuestionValidation, validateRequest, addQuestionToExam);
+  .get(protect, getExamQuestions) // Allow all authenticated users (students, teachers, admins)
+  .post(
+    protect,
+    restrictTo('teacher', 'admin'), // Only teachers/admins can add questions
+    createQuestionValidation,
+    validateRequest,
+    addQuestionToExam
+  );
 
 export { router as QuestionRouter };

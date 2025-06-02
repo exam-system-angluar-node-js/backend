@@ -12,7 +12,7 @@ export const createExamValidations = [
     .toDate()
     .withMessage('Start date must be a valid ISO8601 date'),
 
-  body('durration')
+  body('duration')
     .notEmpty()
     .withMessage('Duration is required')
     .isInt({ min: 1 })
