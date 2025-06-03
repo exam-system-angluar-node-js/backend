@@ -31,7 +31,7 @@ model Exam {
   startDate   DateTime
   duration    Int
   category    String
-  status      String     @default("draft")
+  status      String     @default("active") @db.VarChar(255)
   userId      Int
   user        User       @relation(fields: [userId], references: [id])
   questions   Question[]
@@ -55,7 +55,7 @@ model Result {
   userId    Int
   examId    Int
   answers   UserExamAnswer?
-  score     Int
+  score     Int   
   passed    Boolean
   createdAt DateTime        @default(now())
   user      User            @relation(fields: [userId], references: [id])

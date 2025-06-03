@@ -8,7 +8,7 @@ import {
   getExamById,
   submitExam,
   takeExamHandler,
-  getExamResultHandler, // Make sure this is imported
+  getExamResultHandler,
 } from '../handlers/exam-handler';
 import { restrictTo } from '../middlewares/restricto';
 import { createExamValidations } from '../utils/createExamValidation';
@@ -45,6 +45,8 @@ router.get(
   takeExamHandler
 );
 
+
+
 router.post('/submit/:resultId', protect, restrictTo('student'), submitExam);
 
 // Generic routes should come AFTER specific ones
@@ -57,6 +59,10 @@ router
     validateEditExam,
     validateRequest,
     editExamHandler
-  );
+  )
+
+
+ 
+
 
 export { router as ExamRouter };
