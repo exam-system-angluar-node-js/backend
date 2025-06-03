@@ -302,9 +302,10 @@ export const submitExam = catchAsync(async (req: Request, res: Response) => {
     }
   });
 
-
+  // Calculate percentage score (0-100)
+  // Example: 8 correct out of 10 questions = (8/10) * 100 = 80
   const score = totalQuestions > 0 ? Math.round((correctAnswers / totalQuestions) * 100) : 0;
-  const passed = score >= 60;
+  const passed = score >= 60; // Pass if score is 60% or higher
 
   const updatedResult = await prisma.result.update({
     where: { id: resultId },
