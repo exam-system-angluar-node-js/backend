@@ -82,15 +82,18 @@ export const createNewExamHandler = catchAsync(
     const { title, description, startDate, duration, category } = req.body;
     const userId = req.user?.id;
 
-    const examData: any = {
+    if (!userId) {
+      throw new BadRequestError('User not authenticated');
+    }
+
+    const examData = {
       title,
       description,
       startDate,
       duration,
       category,
+      userId
     };
-
-    if (userId !== undefined) examData.userId = userId;
 
     const newExam = await prisma.exam.create({
       data: examData,
@@ -167,6 +170,8 @@ export const getExamById = catchAsync(async (req: Request, res: Response) => {
 
   res.status(200).json(exam);
 });
+
+
 
 // export const getExamById = catchAsync(async (req: Request, res: Response) => {
 //   const examId = parseInt(req.params.examId);
@@ -288,17 +293,18 @@ export const submitExam = catchAsync(async (req: Request, res: Response) => {
     );
   }
 
-  let score = 0;
-  let totalPoints = 0;
+  let correctAnswers = 0;
+  const totalQuestions = exam?.questions.length || 0;
 
   exam?.questions.forEach((question) => {
-    totalPoints += question.points;
     if (submittedAnswers[question.id] === question.answer) {
-      score += question.points;
+      correctAnswers++;
     }
   });
 
-  const passed = score >= totalPoints * 0.6;
+
+  const score = totalQuestions > 0 ? Math.round((correctAnswers / totalQuestions) * 100) : 0;
+  const passed = score >= 60;
 
   const updatedResult = await prisma.result.update({
     where: { id: resultId },
