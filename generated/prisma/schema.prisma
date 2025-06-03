@@ -55,7 +55,7 @@ model Result {
   userId    Int
   examId    Int
   answers   UserExamAnswer?
-  score     Int   
+  score     Int
   passed    Boolean
   createdAt DateTime        @default(now())
   user      User            @relation(fields: [userId], references: [id])
