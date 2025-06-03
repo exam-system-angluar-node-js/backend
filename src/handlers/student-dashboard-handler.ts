@@ -18,8 +18,8 @@ declare global {
 interface DashboardStats {
   totalExams: number;
   completedExams: number;
-  averageScore: string;
-  passRate: string;
+  averageScore: number;
+  passRate: number;
   totalQuestions: number;
   correctAnswers: number;
 }
@@ -103,8 +103,8 @@ export const getDashboardStatsHandler = catchAsync(
     const dashboardStats: DashboardStats = {
       totalExams,
       completedExams,
-      averageScore: averageScore.toFixed(1),
-      passRate: passRate.toFixed(1),
+      averageScore: Number(averageScore.toFixed(1)),
+      passRate: Number(passRate.toFixed(1)),
       totalQuestions,
       correctAnswers,
     };
@@ -249,12 +249,7 @@ export const getCategoryPerformanceHandler = catchAsync(
       categoryPerformance[category] = Math.round(averageScore);
     });
 
-    // Sort by performance (highest first)
-    const sortedPerformance = Object.fromEntries(
-      Object.entries(categoryPerformance).sort(([, a], [, b]) => b - a)
-    );
-
-    res.json(sortedPerformance);
+    res.json(categoryPerformance);
   }
 );
 
