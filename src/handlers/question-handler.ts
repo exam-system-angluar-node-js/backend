@@ -3,6 +3,7 @@ import { PrismaClient, User } from '../../generated/prisma/index';
 import { catchAsync } from '../utils/catchAsync';
 import { BadRequestError } from '../errors/bad-request-error';
 import { ForbiddenError } from '../errors/forbidden-error';
+import { NotFoundError } from '../errors/not-found-error';
 
 declare global {
   namespace Express {
@@ -110,6 +111,78 @@ export const addQuestionToExam = catchAsync(
     res.status(201).json({
       status: 'success',
       message: `${createdQuestions.count} questions added`,
+    });
+  }
+);
+
+export const editQuestionHandler = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const questionId = parseInt(req.params.questionId);
+    const userId = req.user?.id;
+    const updatedQuestionData = req.body;
+
+    if (!questionId) {
+      throw new BadRequestError('Invalid question id');
+    }
+
+    const question = await prisma.question.findUnique({
+      where: { id: questionId },
+      include: { exam: true }
+    });
+
+    if (!question) {
+      throw new NotFoundError();
+    }
+
+    // Check if the user is the owner of the exam the question belongs to
+    if (question.exam.userId !== userId) {
+      throw new ForbiddenError();
+    }
+
+    const updatedQuestion = await prisma.question.update({
+      where: { id: questionId },
+      data: updatedQuestionData,
+    });
+
+    res.status(200).json({
+      status: 'success',
+      message: 'Question updated successfully',
+      data: updatedQuestion,
+    });
+  }
+);
+
+export const deleteQuestionHandler = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const questionId = parseInt(req.params.questionId);
+    const userId = req.user?.id;
+
+    if (!questionId) {
+      throw new BadRequestError('Invalid question id');
+    }
+
+    const question = await prisma.question.findUnique({
+      where: { id: questionId },
+      include: { exam: true }
+    });
+
+    if (!question) {
+      throw new NotFoundError();
+    }
+
+    // Check if the user is the owner of the exam the question belongs to
+    if (question.exam.userId !== userId) {
+      throw new ForbiddenError();
+    }
+
+    await prisma.question.delete({
+      where: { id: questionId },
+    });
+
+    res.status(204).json({
+      status: 'success',
+      message: 'Question deleted successfully',
+      data: null
     });
   }
 );

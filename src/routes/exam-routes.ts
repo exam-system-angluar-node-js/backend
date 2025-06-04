@@ -9,6 +9,7 @@ import {
   submitExam,
   takeExamHandler,
   getExamResultHandler,
+  deleteExamHandler,
 } from '../handlers/exam-handler';
 import { restrictTo } from '../middlewares/restricto';
 import { createExamValidations } from '../utils/createExamValidation';
@@ -55,11 +56,16 @@ router
   .get(protect, getExamById) // Accessible to all authenticated users
   .patch(
     protect,
-    restrictTo('teacher'),
+    restrictTo('teacher', 'admin'),
     validateEditExam,
     validateRequest,
     editExamHandler
   )
+  .delete(
+    protect,
+    restrictTo('teacher', 'admin'),
+    deleteExamHandler
+  );
 
 
  
