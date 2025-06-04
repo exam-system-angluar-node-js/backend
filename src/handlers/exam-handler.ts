@@ -148,14 +148,24 @@ export const editExamHandler = catchAsync(
 
 export const getExamById = catchAsync(async (req: Request, res: Response) => {
   const examId = parseInt(req.params.examId);
+  console.log(`Attempting to fetch exam with ID: ${examId}`);
+
+  if (isNaN(examId)) {
+    console.log('Invalid exam ID provided.');
+    throw new BadRequestError('Invalid exam ID');
+  }
 
   const exam = await prisma.exam.findUnique({
     where: { id: examId },
     include: { questions: true },
   });
 
-  if (!exam) throw new NotFoundError();
+  if (!exam) {
+    console.log(`Exam with ID ${examId} not found in database.`);
+    throw new NotFoundError();
+  }
 
+  console.log(`Successfully fetched exam with ID: ${examId}`);
   // Remove answers for students
   if (req.user?.role === 'student') {
     const examWithoutAnswers = {
@@ -170,28 +180,6 @@ export const getExamById = catchAsync(async (req: Request, res: Response) => {
 
   res.status(200).json(exam);
 });
-
-
-
-// export const getExamById = catchAsync(async (req: Request, res: Response) => {
-//   const examId = parseInt(req.params.examId);
-//   const userId = req.user?.id;
-
-//   const exam = await prisma.exam.findUnique({
-//     where: { id: examId },
-//     include: { questions: true },
-//   });
-
-//   if (!exam) {
-//     throw new NotFoundError();
-//   }
-
-//   if (userId === undefined) {
-//     throw new BadRequestError('Provide valid user id');
-//   }
-
-//   res.status(200).json(exam);
-// });
 
 export const takeExamHandler = catchAsync(
   async (req: Request, res: Response) => {
@@ -408,6 +396,13 @@ export const deleteExamHandler = async (req: Request, res: Response) => {
     });
 
     await prisma.question.deleteMany({
+      where: {
+        examId: parseInt(examId)
+      }
+    });
+
+    // Delete cheating reports
+    await prisma.cheatingReport.deleteMany({
       where: {
         examId: parseInt(examId)
       }

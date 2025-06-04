@@ -4,6 +4,7 @@ import { Password } from '../utils/Password';
 import jwt from 'jsonwebtoken';
 import { BadRequestError } from '../errors/bad-request-error';
 import { catchAsync } from '../utils/catchAsync';
+import { NotFoundError } from '../errors/not-found-error';
 
 const prisma = new PrismaClient();
 
@@ -100,3 +101,32 @@ export const signupHandler = catchAsync(
     });
   }
 );
+
+// Handler to get a user by ID (for admin and teacher)
+export const getUserByIdHandler = catchAsync(async (req: Request, res: Response) => {
+  const userId = parseInt(req.params.userId);
+  console.log(`Attempting to fetch user with ID: ${userId}`);
+
+  if (isNaN(userId)) {
+    console.log('Invalid user ID provided.');
+    throw new BadRequestError('Invalid user ID');
+  }
+
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      role: true,
+    },
+  });
+
+  if (!user) {
+    console.log(`User with ID ${userId} not found in database.`);
+    throw new NotFoundError();
+  }
+
+  console.log(`Successfully fetched user with ID: ${userId}`);
+  res.status(200).json(user);
+});
