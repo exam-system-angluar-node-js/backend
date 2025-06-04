@@ -165,12 +165,12 @@ exports.Prisma.UserExamAnswerScalarFieldEnum = {
   answer: 'answer'
 };
 
-exports.Prisma.CheatingIncidentScalarFieldEnum = {
+exports.Prisma.CheatingReportScalarFieldEnum = {
   id: 'id',
   studentId: 'studentId',
   examId: 'examId',
   timestamp: 'timestamp',
-  details: 'details'
+  cheatingType: 'cheatingType'
 };
 
 exports.Prisma.SortOrder = {
@@ -183,11 +183,6 @@ exports.Prisma.QueryMode = {
   insensitive: 'insensitive'
 };
 
-exports.Prisma.NullsOrder = {
-  first: 'first',
-  last: 'last'
-};
-
 
 exports.Prisma.ModelName = {
   User: 'User',
@@ -195,7 +190,7 @@ exports.Prisma.ModelName = {
   Question: 'Question',
   Result: 'Result',
   UserExamAnswer: 'UserExamAnswer',
-  CheatingIncident: 'CheatingIncident'
+  CheatingReport: 'CheatingReport'
 };
 
 /**

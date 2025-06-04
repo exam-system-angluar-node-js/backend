@@ -15,31 +15,30 @@ datasource db {
 }
 
 model User {
-  id                Int                @id @default(autoincrement())
-  name              String
-  email             String             @unique
-  role              String
-  password          String
-  exams             Exam[]
-  results           Result[]
-  cheatingIncidents CheatingIncident[]
+  id       Int      @id @default(autoincrement())
+  name     String
+  email    String   @unique
+  role     String
+  password String
+  exams    Exam[]
+  results  Result[]
 }
 
 model Exam {
-  id                Int                @id @default(autoincrement())
-  title             String
-  description       String
-  startDate         DateTime
-  duration          Int
-  category          String
-  status            String             @default("active") @db.VarChar(255)
-  userId            Int
-  user              User               @relation(fields: [userId], references: [id])
-  questions         Question[]
-  results           Result[]
-  cheatingIncidents CheatingIncident[]
-  createdAt         DateTime           @default(now())
-  updatedAt         DateTime           @updatedAt
+  id              Int              @id @default(autoincrement())
+  title           String
+  description     String
+  startDate       DateTime
+  duration        Int
+  category        String
+  status          String           @default("active") @db.VarChar(255)
+  userId          Int
+  user            User             @relation(fields: [userId], references: [id])
+  questions       Question[]
+  results         Result[]
+  cheatingReports CheatingReport[]
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
 }
 
 model Question {
@@ -72,13 +71,11 @@ model UserExamAnswer {
   result Result? @relation(fields: [resultId], references: [id])
 }
 
-model CheatingIncident {
-  id        Int      @id @default(autoincrement())
-  userId    Int
-  examId    Int
-  timestamp DateTime @default(now())
-  details   String?
-
-  user User @relation(fields: [userId], references: [id])
-  exam Exam @relation(fields: [examId], references: [id])
+model CheatingReport {
+  id           Int      @id @default(autoincrement())
+  studentId    Int
+  examId       Int
+  timestamp    DateTime @default(now())
+  cheatingType String
+  exam         Exam     @relation(fields: [examId], references: [id], onDelete: Cascade)
 }

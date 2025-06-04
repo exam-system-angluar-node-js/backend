@@ -8,6 +8,7 @@ import { ExamRouter } from './routes/exam-routes';
 import { QuestionRouter } from './routes/question-routes';
 import { AdminRouter } from './routes/admin-routes';
 import { StudentDashboardRouter } from './routes/student-dashboard-routes';
+import { CheatingReportRouter } from './routes/cheating-report-routes';
 
 import { errorHandler } from './middlewares/error-handler';
 
@@ -27,6 +28,7 @@ app.use('/api/v1/exams', ExamRouter);
 app.use('/api/v1/questions', QuestionRouter);
 app.use('/api/v1/admin', AdminRouter);
 app.use('/api/v1/students', StudentDashboardRouter);
+app.use('/api/v1/cheating-reports', CheatingReportRouter);
 
 app.use(errorHandler);
 
