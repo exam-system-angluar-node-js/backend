@@ -38,6 +38,11 @@ export type Result = $Result.DefaultSelection<Prisma.$ResultPayload>
  * 
  */
 export type UserExamAnswer = $Result.DefaultSelection<Prisma.$UserExamAnswerPayload>
+/**
+ * Model CheatingIncident
+ * 
+ */
+export type CheatingIncident = $Result.DefaultSelection<Prisma.$CheatingIncidentPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -213,6 +218,16 @@ export class PrismaClient<
     * ```
     */
   get userExamAnswer(): Prisma.UserExamAnswerDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.cheatingIncident`: Exposes CRUD operations for the **CheatingIncident** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more CheatingIncidents
+    * const cheatingIncidents = await prisma.cheatingIncident.findMany()
+    * ```
+    */
+  get cheatingIncident(): Prisma.CheatingIncidentDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -271,8 +286,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 6.8.2
-   * Query Engine version: 2060c79ba17c6bb9f5823312b6f6b7f4a845738e
+   * Prisma Client JS version: 6.7.0
+   * Query Engine version: 3cff47a7f5d65c3ea74883f1d736e41d68ce91ed
    */
   export type PrismaVersion = {
     client: string
@@ -657,7 +672,8 @@ export namespace Prisma {
     Exam: 'Exam',
     Question: 'Question',
     Result: 'Result',
-    UserExamAnswer: 'UserExamAnswer'
+    UserExamAnswer: 'UserExamAnswer',
+    CheatingIncident: 'CheatingIncident'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -676,7 +692,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "exam" | "question" | "result" | "userExamAnswer"
+      modelProps: "user" | "exam" | "question" | "result" | "userExamAnswer" | "cheatingIncident"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1050,6 +1066,80 @@ export namespace Prisma {
           }
         }
       }
+      CheatingIncident: {
+        payload: Prisma.$CheatingIncidentPayload<ExtArgs>
+        fields: Prisma.CheatingIncidentFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.CheatingIncidentFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CheatingIncidentPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.CheatingIncidentFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CheatingIncidentPayload>
+          }
+          findFirst: {
+            args: Prisma.CheatingIncidentFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CheatingIncidentPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.CheatingIncidentFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CheatingIncidentPayload>
+          }
+          findMany: {
+            args: Prisma.CheatingIncidentFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CheatingIncidentPayload>[]
+          }
+          create: {
+            args: Prisma.CheatingIncidentCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CheatingIncidentPayload>
+          }
+          createMany: {
+            args: Prisma.CheatingIncidentCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.CheatingIncidentCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CheatingIncidentPayload>[]
+          }
+          delete: {
+            args: Prisma.CheatingIncidentDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CheatingIncidentPayload>
+          }
+          update: {
+            args: Prisma.CheatingIncidentUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CheatingIncidentPayload>
+          }
+          deleteMany: {
+            args: Prisma.CheatingIncidentDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.CheatingIncidentUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.CheatingIncidentUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CheatingIncidentPayload>[]
+          }
+          upsert: {
+            args: Prisma.CheatingIncidentUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CheatingIncidentPayload>
+          }
+          aggregate: {
+            args: Prisma.CheatingIncidentAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCheatingIncident>
+          }
+          groupBy: {
+            args: Prisma.CheatingIncidentGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CheatingIncidentGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.CheatingIncidentCountArgs<ExtArgs>
+            result: $Utils.Optional<CheatingIncidentCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1139,6 +1229,7 @@ export namespace Prisma {
     question?: QuestionOmit
     result?: ResultOmit
     userExamAnswer?: UserExamAnswerOmit
+    cheatingIncident?: CheatingIncidentOmit
   }
 
   /* Types for Logging */
@@ -1235,11 +1326,13 @@ export namespace Prisma {
   export type UserCountOutputType = {
     exams: number
     results: number
+    cheatingIncidents: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     exams?: boolean | UserCountOutputTypeCountExamsArgs
     results?: boolean | UserCountOutputTypeCountResultsArgs
+    cheatingIncidents?: boolean | UserCountOutputTypeCountCheatingIncidentsArgs
   }
 
   // Custom InputTypes
@@ -1267,6 +1360,13 @@ export namespace Prisma {
     where?: ResultWhereInput
   }
 
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountCheatingIncidentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CheatingIncidentWhereInput
+  }
+
 
   /**
    * Count Type ExamCountOutputType
@@ -1275,11 +1375,13 @@ export namespace Prisma {
   export type ExamCountOutputType = {
     questions: number
     results: number
+    cheatingIncidents: number
   }
 
   export type ExamCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     questions?: boolean | ExamCountOutputTypeCountQuestionsArgs
     results?: boolean | ExamCountOutputTypeCountResultsArgs
+    cheatingIncidents?: boolean | ExamCountOutputTypeCountCheatingIncidentsArgs
   }
 
   // Custom InputTypes
@@ -1305,6 +1407,13 @@ export namespace Prisma {
    */
   export type ExamCountOutputTypeCountResultsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ResultWhereInput
+  }
+
+  /**
+   * ExamCountOutputType without action
+   */
+  export type ExamCountOutputTypeCountCheatingIncidentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CheatingIncidentWhereInput
   }
 
 
@@ -1512,6 +1621,7 @@ export namespace Prisma {
     password?: boolean
     exams?: boolean | User$examsArgs<ExtArgs>
     results?: boolean | User$resultsArgs<ExtArgs>
+    cheatingIncidents?: boolean | User$cheatingIncidentsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -1543,6 +1653,7 @@ export namespace Prisma {
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     exams?: boolean | User$examsArgs<ExtArgs>
     results?: boolean | User$resultsArgs<ExtArgs>
+    cheatingIncidents?: boolean | User$cheatingIncidentsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1553,6 +1664,7 @@ export namespace Prisma {
     objects: {
       exams: Prisma.$ExamPayload<ExtArgs>[]
       results: Prisma.$ResultPayload<ExtArgs>[]
+      cheatingIncidents: Prisma.$CheatingIncidentPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -1956,6 +2068,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     exams<T extends User$examsArgs<ExtArgs> = {}>(args?: Subset<T, User$examsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ExamPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     results<T extends User$resultsArgs<ExtArgs> = {}>(args?: Subset<T, User$resultsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ResultPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    cheatingIncidents<T extends User$cheatingIncidentsArgs<ExtArgs> = {}>(args?: Subset<T, User$cheatingIncidentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CheatingIncidentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2426,6 +2539,30 @@ export namespace Prisma {
   }
 
   /**
+   * User.cheatingIncidents
+   */
+  export type User$cheatingIncidentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CheatingIncident
+     */
+    select?: CheatingIncidentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CheatingIncident
+     */
+    omit?: CheatingIncidentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CheatingIncidentInclude<ExtArgs> | null
+    where?: CheatingIncidentWhereInput
+    orderBy?: CheatingIncidentOrderByWithRelationInput | CheatingIncidentOrderByWithRelationInput[]
+    cursor?: CheatingIncidentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CheatingIncidentScalarFieldEnum | CheatingIncidentScalarFieldEnum[]
+  }
+
+  /**
    * User without action
    */
   export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2693,6 +2830,7 @@ export namespace Prisma {
     user?: boolean | UserDefaultArgs<ExtArgs>
     questions?: boolean | Exam$questionsArgs<ExtArgs>
     results?: boolean | Exam$resultsArgs<ExtArgs>
+    cheatingIncidents?: boolean | Exam$cheatingIncidentsArgs<ExtArgs>
     _count?: boolean | ExamCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["exam"]>
 
@@ -2742,6 +2880,7 @@ export namespace Prisma {
     user?: boolean | UserDefaultArgs<ExtArgs>
     questions?: boolean | Exam$questionsArgs<ExtArgs>
     results?: boolean | Exam$resultsArgs<ExtArgs>
+    cheatingIncidents?: boolean | Exam$cheatingIncidentsArgs<ExtArgs>
     _count?: boolean | ExamCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ExamIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2757,6 +2896,7 @@ export namespace Prisma {
       user: Prisma.$UserPayload<ExtArgs>
       questions: Prisma.$QuestionPayload<ExtArgs>[]
       results: Prisma.$ResultPayload<ExtArgs>[]
+      cheatingIncidents: Prisma.$CheatingIncidentPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -3166,6 +3306,7 @@ export namespace Prisma {
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     questions<T extends Exam$questionsArgs<ExtArgs> = {}>(args?: Subset<T, Exam$questionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$QuestionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     results<T extends Exam$resultsArgs<ExtArgs> = {}>(args?: Subset<T, Exam$resultsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ResultPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    cheatingIncidents<T extends Exam$cheatingIncidentsArgs<ExtArgs> = {}>(args?: Subset<T, Exam$cheatingIncidentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CheatingIncidentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3646,6 +3787,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ResultScalarFieldEnum | ResultScalarFieldEnum[]
+  }
+
+  /**
+   * Exam.cheatingIncidents
+   */
+  export type Exam$cheatingIncidentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CheatingIncident
+     */
+    select?: CheatingIncidentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CheatingIncident
+     */
+    omit?: CheatingIncidentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CheatingIncidentInclude<ExtArgs> | null
+    where?: CheatingIncidentWhereInput
+    orderBy?: CheatingIncidentOrderByWithRelationInput | CheatingIncidentOrderByWithRelationInput[]
+    cursor?: CheatingIncidentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CheatingIncidentScalarFieldEnum | CheatingIncidentScalarFieldEnum[]
   }
 
   /**
@@ -7018,6 +7183,1114 @@ export namespace Prisma {
 
 
   /**
+   * Model CheatingIncident
+   */
+
+  export type AggregateCheatingIncident = {
+    _count: CheatingIncidentCountAggregateOutputType | null
+    _avg: CheatingIncidentAvgAggregateOutputType | null
+    _sum: CheatingIncidentSumAggregateOutputType | null
+    _min: CheatingIncidentMinAggregateOutputType | null
+    _max: CheatingIncidentMaxAggregateOutputType | null
+  }
+
+  export type CheatingIncidentAvgAggregateOutputType = {
+    id: number | null
+    studentId: number | null
+    examId: number | null
+  }
+
+  export type CheatingIncidentSumAggregateOutputType = {
+    id: number | null
+    studentId: number | null
+    examId: number | null
+  }
+
+  export type CheatingIncidentMinAggregateOutputType = {
+    id: number | null
+    studentId: number | null
+    examId: number | null
+    timestamp: Date | null
+    details: string | null
+  }
+
+  export type CheatingIncidentMaxAggregateOutputType = {
+    id: number | null
+    studentId: number | null
+    examId: number | null
+    timestamp: Date | null
+    details: string | null
+  }
+
+  export type CheatingIncidentCountAggregateOutputType = {
+    id: number
+    studentId: number
+    examId: number
+    timestamp: number
+    details: number
+    _all: number
+  }
+
+
+  export type CheatingIncidentAvgAggregateInputType = {
+    id?: true
+    studentId?: true
+    examId?: true
+  }
+
+  export type CheatingIncidentSumAggregateInputType = {
+    id?: true
+    studentId?: true
+    examId?: true
+  }
+
+  export type CheatingIncidentMinAggregateInputType = {
+    id?: true
+    studentId?: true
+    examId?: true
+    timestamp?: true
+    details?: true
+  }
+
+  export type CheatingIncidentMaxAggregateInputType = {
+    id?: true
+    studentId?: true
+    examId?: true
+    timestamp?: true
+    details?: true
+  }
+
+  export type CheatingIncidentCountAggregateInputType = {
+    id?: true
+    studentId?: true
+    examId?: true
+    timestamp?: true
+    details?: true
+    _all?: true
+  }
+
+  export type CheatingIncidentAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CheatingIncident to aggregate.
+     */
+    where?: CheatingIncidentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CheatingIncidents to fetch.
+     */
+    orderBy?: CheatingIncidentOrderByWithRelationInput | CheatingIncidentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: CheatingIncidentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CheatingIncidents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CheatingIncidents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned CheatingIncidents
+    **/
+    _count?: true | CheatingIncidentCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: CheatingIncidentAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: CheatingIncidentSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: CheatingIncidentMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: CheatingIncidentMaxAggregateInputType
+  }
+
+  export type GetCheatingIncidentAggregateType<T extends CheatingIncidentAggregateArgs> = {
+        [P in keyof T & keyof AggregateCheatingIncident]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCheatingIncident[P]>
+      : GetScalarType<T[P], AggregateCheatingIncident[P]>
+  }
+
+
+
+
+  export type CheatingIncidentGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CheatingIncidentWhereInput
+    orderBy?: CheatingIncidentOrderByWithAggregationInput | CheatingIncidentOrderByWithAggregationInput[]
+    by: CheatingIncidentScalarFieldEnum[] | CheatingIncidentScalarFieldEnum
+    having?: CheatingIncidentScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: CheatingIncidentCountAggregateInputType | true
+    _avg?: CheatingIncidentAvgAggregateInputType
+    _sum?: CheatingIncidentSumAggregateInputType
+    _min?: CheatingIncidentMinAggregateInputType
+    _max?: CheatingIncidentMaxAggregateInputType
+  }
+
+  export type CheatingIncidentGroupByOutputType = {
+    id: number
+    studentId: number
+    examId: number
+    timestamp: Date
+    details: string | null
+    _count: CheatingIncidentCountAggregateOutputType | null
+    _avg: CheatingIncidentAvgAggregateOutputType | null
+    _sum: CheatingIncidentSumAggregateOutputType | null
+    _min: CheatingIncidentMinAggregateOutputType | null
+    _max: CheatingIncidentMaxAggregateOutputType | null
+  }
+
+  type GetCheatingIncidentGroupByPayload<T extends CheatingIncidentGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<CheatingIncidentGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof CheatingIncidentGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], CheatingIncidentGroupByOutputType[P]>
+            : GetScalarType<T[P], CheatingIncidentGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type CheatingIncidentSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    studentId?: boolean
+    examId?: boolean
+    timestamp?: boolean
+    details?: boolean
+    student?: boolean | UserDefaultArgs<ExtArgs>
+    exam?: boolean | ExamDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["cheatingIncident"]>
+
+  export type CheatingIncidentSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    studentId?: boolean
+    examId?: boolean
+    timestamp?: boolean
+    details?: boolean
+    student?: boolean | UserDefaultArgs<ExtArgs>
+    exam?: boolean | ExamDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["cheatingIncident"]>
+
+  export type CheatingIncidentSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    studentId?: boolean
+    examId?: boolean
+    timestamp?: boolean
+    details?: boolean
+    student?: boolean | UserDefaultArgs<ExtArgs>
+    exam?: boolean | ExamDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["cheatingIncident"]>
+
+  export type CheatingIncidentSelectScalar = {
+    id?: boolean
+    studentId?: boolean
+    examId?: boolean
+    timestamp?: boolean
+    details?: boolean
+  }
+
+  export type CheatingIncidentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "studentId" | "examId" | "timestamp" | "details", ExtArgs["result"]["cheatingIncident"]>
+  export type CheatingIncidentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    student?: boolean | UserDefaultArgs<ExtArgs>
+    exam?: boolean | ExamDefaultArgs<ExtArgs>
+  }
+  export type CheatingIncidentIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    student?: boolean | UserDefaultArgs<ExtArgs>
+    exam?: boolean | ExamDefaultArgs<ExtArgs>
+  }
+  export type CheatingIncidentIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    student?: boolean | UserDefaultArgs<ExtArgs>
+    exam?: boolean | ExamDefaultArgs<ExtArgs>
+  }
+
+  export type $CheatingIncidentPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "CheatingIncident"
+    objects: {
+      student: Prisma.$UserPayload<ExtArgs>
+      exam: Prisma.$ExamPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      studentId: number
+      examId: number
+      timestamp: Date
+      details: string | null
+    }, ExtArgs["result"]["cheatingIncident"]>
+    composites: {}
+  }
+
+  type CheatingIncidentGetPayload<S extends boolean | null | undefined | CheatingIncidentDefaultArgs> = $Result.GetResult<Prisma.$CheatingIncidentPayload, S>
+
+  type CheatingIncidentCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<CheatingIncidentFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: CheatingIncidentCountAggregateInputType | true
+    }
+
+  export interface CheatingIncidentDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['CheatingIncident'], meta: { name: 'CheatingIncident' } }
+    /**
+     * Find zero or one CheatingIncident that matches the filter.
+     * @param {CheatingIncidentFindUniqueArgs} args - Arguments to find a CheatingIncident
+     * @example
+     * // Get one CheatingIncident
+     * const cheatingIncident = await prisma.cheatingIncident.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends CheatingIncidentFindUniqueArgs>(args: SelectSubset<T, CheatingIncidentFindUniqueArgs<ExtArgs>>): Prisma__CheatingIncidentClient<$Result.GetResult<Prisma.$CheatingIncidentPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one CheatingIncident that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {CheatingIncidentFindUniqueOrThrowArgs} args - Arguments to find a CheatingIncident
+     * @example
+     * // Get one CheatingIncident
+     * const cheatingIncident = await prisma.cheatingIncident.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends CheatingIncidentFindUniqueOrThrowArgs>(args: SelectSubset<T, CheatingIncidentFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CheatingIncidentClient<$Result.GetResult<Prisma.$CheatingIncidentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CheatingIncident that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CheatingIncidentFindFirstArgs} args - Arguments to find a CheatingIncident
+     * @example
+     * // Get one CheatingIncident
+     * const cheatingIncident = await prisma.cheatingIncident.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends CheatingIncidentFindFirstArgs>(args?: SelectSubset<T, CheatingIncidentFindFirstArgs<ExtArgs>>): Prisma__CheatingIncidentClient<$Result.GetResult<Prisma.$CheatingIncidentPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CheatingIncident that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CheatingIncidentFindFirstOrThrowArgs} args - Arguments to find a CheatingIncident
+     * @example
+     * // Get one CheatingIncident
+     * const cheatingIncident = await prisma.cheatingIncident.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends CheatingIncidentFindFirstOrThrowArgs>(args?: SelectSubset<T, CheatingIncidentFindFirstOrThrowArgs<ExtArgs>>): Prisma__CheatingIncidentClient<$Result.GetResult<Prisma.$CheatingIncidentPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more CheatingIncidents that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CheatingIncidentFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all CheatingIncidents
+     * const cheatingIncidents = await prisma.cheatingIncident.findMany()
+     * 
+     * // Get first 10 CheatingIncidents
+     * const cheatingIncidents = await prisma.cheatingIncident.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const cheatingIncidentWithIdOnly = await prisma.cheatingIncident.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends CheatingIncidentFindManyArgs>(args?: SelectSubset<T, CheatingIncidentFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CheatingIncidentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a CheatingIncident.
+     * @param {CheatingIncidentCreateArgs} args - Arguments to create a CheatingIncident.
+     * @example
+     * // Create one CheatingIncident
+     * const CheatingIncident = await prisma.cheatingIncident.create({
+     *   data: {
+     *     // ... data to create a CheatingIncident
+     *   }
+     * })
+     * 
+     */
+    create<T extends CheatingIncidentCreateArgs>(args: SelectSubset<T, CheatingIncidentCreateArgs<ExtArgs>>): Prisma__CheatingIncidentClient<$Result.GetResult<Prisma.$CheatingIncidentPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many CheatingIncidents.
+     * @param {CheatingIncidentCreateManyArgs} args - Arguments to create many CheatingIncidents.
+     * @example
+     * // Create many CheatingIncidents
+     * const cheatingIncident = await prisma.cheatingIncident.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends CheatingIncidentCreateManyArgs>(args?: SelectSubset<T, CheatingIncidentCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many CheatingIncidents and returns the data saved in the database.
+     * @param {CheatingIncidentCreateManyAndReturnArgs} args - Arguments to create many CheatingIncidents.
+     * @example
+     * // Create many CheatingIncidents
+     * const cheatingIncident = await prisma.cheatingIncident.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many CheatingIncidents and only return the `id`
+     * const cheatingIncidentWithIdOnly = await prisma.cheatingIncident.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends CheatingIncidentCreateManyAndReturnArgs>(args?: SelectSubset<T, CheatingIncidentCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CheatingIncidentPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a CheatingIncident.
+     * @param {CheatingIncidentDeleteArgs} args - Arguments to delete one CheatingIncident.
+     * @example
+     * // Delete one CheatingIncident
+     * const CheatingIncident = await prisma.cheatingIncident.delete({
+     *   where: {
+     *     // ... filter to delete one CheatingIncident
+     *   }
+     * })
+     * 
+     */
+    delete<T extends CheatingIncidentDeleteArgs>(args: SelectSubset<T, CheatingIncidentDeleteArgs<ExtArgs>>): Prisma__CheatingIncidentClient<$Result.GetResult<Prisma.$CheatingIncidentPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one CheatingIncident.
+     * @param {CheatingIncidentUpdateArgs} args - Arguments to update one CheatingIncident.
+     * @example
+     * // Update one CheatingIncident
+     * const cheatingIncident = await prisma.cheatingIncident.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends CheatingIncidentUpdateArgs>(args: SelectSubset<T, CheatingIncidentUpdateArgs<ExtArgs>>): Prisma__CheatingIncidentClient<$Result.GetResult<Prisma.$CheatingIncidentPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more CheatingIncidents.
+     * @param {CheatingIncidentDeleteManyArgs} args - Arguments to filter CheatingIncidents to delete.
+     * @example
+     * // Delete a few CheatingIncidents
+     * const { count } = await prisma.cheatingIncident.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends CheatingIncidentDeleteManyArgs>(args?: SelectSubset<T, CheatingIncidentDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CheatingIncidents.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CheatingIncidentUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many CheatingIncidents
+     * const cheatingIncident = await prisma.cheatingIncident.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends CheatingIncidentUpdateManyArgs>(args: SelectSubset<T, CheatingIncidentUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CheatingIncidents and returns the data updated in the database.
+     * @param {CheatingIncidentUpdateManyAndReturnArgs} args - Arguments to update many CheatingIncidents.
+     * @example
+     * // Update many CheatingIncidents
+     * const cheatingIncident = await prisma.cheatingIncident.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more CheatingIncidents and only return the `id`
+     * const cheatingIncidentWithIdOnly = await prisma.cheatingIncident.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends CheatingIncidentUpdateManyAndReturnArgs>(args: SelectSubset<T, CheatingIncidentUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CheatingIncidentPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one CheatingIncident.
+     * @param {CheatingIncidentUpsertArgs} args - Arguments to update or create a CheatingIncident.
+     * @example
+     * // Update or create a CheatingIncident
+     * const cheatingIncident = await prisma.cheatingIncident.upsert({
+     *   create: {
+     *     // ... data to create a CheatingIncident
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the CheatingIncident we want to update
+     *   }
+     * })
+     */
+    upsert<T extends CheatingIncidentUpsertArgs>(args: SelectSubset<T, CheatingIncidentUpsertArgs<ExtArgs>>): Prisma__CheatingIncidentClient<$Result.GetResult<Prisma.$CheatingIncidentPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of CheatingIncidents.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CheatingIncidentCountArgs} args - Arguments to filter CheatingIncidents to count.
+     * @example
+     * // Count the number of CheatingIncidents
+     * const count = await prisma.cheatingIncident.count({
+     *   where: {
+     *     // ... the filter for the CheatingIncidents we want to count
+     *   }
+     * })
+    **/
+    count<T extends CheatingIncidentCountArgs>(
+      args?: Subset<T, CheatingIncidentCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], CheatingIncidentCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a CheatingIncident.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CheatingIncidentAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends CheatingIncidentAggregateArgs>(args: Subset<T, CheatingIncidentAggregateArgs>): Prisma.PrismaPromise<GetCheatingIncidentAggregateType<T>>
+
+    /**
+     * Group by CheatingIncident.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CheatingIncidentGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends CheatingIncidentGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: CheatingIncidentGroupByArgs['orderBy'] }
+        : { orderBy?: CheatingIncidentGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, CheatingIncidentGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCheatingIncidentGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the CheatingIncident model
+   */
+  readonly fields: CheatingIncidentFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for CheatingIncident.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__CheatingIncidentClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    student<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    exam<T extends ExamDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ExamDefaultArgs<ExtArgs>>): Prisma__ExamClient<$Result.GetResult<Prisma.$ExamPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the CheatingIncident model
+   */
+  interface CheatingIncidentFieldRefs {
+    readonly id: FieldRef<"CheatingIncident", 'Int'>
+    readonly studentId: FieldRef<"CheatingIncident", 'Int'>
+    readonly examId: FieldRef<"CheatingIncident", 'Int'>
+    readonly timestamp: FieldRef<"CheatingIncident", 'DateTime'>
+    readonly details: FieldRef<"CheatingIncident", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * CheatingIncident findUnique
+   */
+  export type CheatingIncidentFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CheatingIncident
+     */
+    select?: CheatingIncidentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CheatingIncident
+     */
+    omit?: CheatingIncidentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CheatingIncidentInclude<ExtArgs> | null
+    /**
+     * Filter, which CheatingIncident to fetch.
+     */
+    where: CheatingIncidentWhereUniqueInput
+  }
+
+  /**
+   * CheatingIncident findUniqueOrThrow
+   */
+  export type CheatingIncidentFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CheatingIncident
+     */
+    select?: CheatingIncidentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CheatingIncident
+     */
+    omit?: CheatingIncidentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CheatingIncidentInclude<ExtArgs> | null
+    /**
+     * Filter, which CheatingIncident to fetch.
+     */
+    where: CheatingIncidentWhereUniqueInput
+  }
+
+  /**
+   * CheatingIncident findFirst
+   */
+  export type CheatingIncidentFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CheatingIncident
+     */
+    select?: CheatingIncidentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CheatingIncident
+     */
+    omit?: CheatingIncidentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CheatingIncidentInclude<ExtArgs> | null
+    /**
+     * Filter, which CheatingIncident to fetch.
+     */
+    where?: CheatingIncidentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CheatingIncidents to fetch.
+     */
+    orderBy?: CheatingIncidentOrderByWithRelationInput | CheatingIncidentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CheatingIncidents.
+     */
+    cursor?: CheatingIncidentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CheatingIncidents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CheatingIncidents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CheatingIncidents.
+     */
+    distinct?: CheatingIncidentScalarFieldEnum | CheatingIncidentScalarFieldEnum[]
+  }
+
+  /**
+   * CheatingIncident findFirstOrThrow
+   */
+  export type CheatingIncidentFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CheatingIncident
+     */
+    select?: CheatingIncidentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CheatingIncident
+     */
+    omit?: CheatingIncidentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CheatingIncidentInclude<ExtArgs> | null
+    /**
+     * Filter, which CheatingIncident to fetch.
+     */
+    where?: CheatingIncidentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CheatingIncidents to fetch.
+     */
+    orderBy?: CheatingIncidentOrderByWithRelationInput | CheatingIncidentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CheatingIncidents.
+     */
+    cursor?: CheatingIncidentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CheatingIncidents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CheatingIncidents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CheatingIncidents.
+     */
+    distinct?: CheatingIncidentScalarFieldEnum | CheatingIncidentScalarFieldEnum[]
+  }
+
+  /**
+   * CheatingIncident findMany
+   */
+  export type CheatingIncidentFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CheatingIncident
+     */
+    select?: CheatingIncidentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CheatingIncident
+     */
+    omit?: CheatingIncidentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CheatingIncidentInclude<ExtArgs> | null
+    /**
+     * Filter, which CheatingIncidents to fetch.
+     */
+    where?: CheatingIncidentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CheatingIncidents to fetch.
+     */
+    orderBy?: CheatingIncidentOrderByWithRelationInput | CheatingIncidentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing CheatingIncidents.
+     */
+    cursor?: CheatingIncidentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CheatingIncidents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CheatingIncidents.
+     */
+    skip?: number
+    distinct?: CheatingIncidentScalarFieldEnum | CheatingIncidentScalarFieldEnum[]
+  }
+
+  /**
+   * CheatingIncident create
+   */
+  export type CheatingIncidentCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CheatingIncident
+     */
+    select?: CheatingIncidentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CheatingIncident
+     */
+    omit?: CheatingIncidentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CheatingIncidentInclude<ExtArgs> | null
+    /**
+     * The data needed to create a CheatingIncident.
+     */
+    data: XOR<CheatingIncidentCreateInput, CheatingIncidentUncheckedCreateInput>
+  }
+
+  /**
+   * CheatingIncident createMany
+   */
+  export type CheatingIncidentCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many CheatingIncidents.
+     */
+    data: CheatingIncidentCreateManyInput | CheatingIncidentCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * CheatingIncident createManyAndReturn
+   */
+  export type CheatingIncidentCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CheatingIncident
+     */
+    select?: CheatingIncidentSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the CheatingIncident
+     */
+    omit?: CheatingIncidentOmit<ExtArgs> | null
+    /**
+     * The data used to create many CheatingIncidents.
+     */
+    data: CheatingIncidentCreateManyInput | CheatingIncidentCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CheatingIncidentIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * CheatingIncident update
+   */
+  export type CheatingIncidentUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CheatingIncident
+     */
+    select?: CheatingIncidentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CheatingIncident
+     */
+    omit?: CheatingIncidentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CheatingIncidentInclude<ExtArgs> | null
+    /**
+     * The data needed to update a CheatingIncident.
+     */
+    data: XOR<CheatingIncidentUpdateInput, CheatingIncidentUncheckedUpdateInput>
+    /**
+     * Choose, which CheatingIncident to update.
+     */
+    where: CheatingIncidentWhereUniqueInput
+  }
+
+  /**
+   * CheatingIncident updateMany
+   */
+  export type CheatingIncidentUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update CheatingIncidents.
+     */
+    data: XOR<CheatingIncidentUpdateManyMutationInput, CheatingIncidentUncheckedUpdateManyInput>
+    /**
+     * Filter which CheatingIncidents to update
+     */
+    where?: CheatingIncidentWhereInput
+    /**
+     * Limit how many CheatingIncidents to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * CheatingIncident updateManyAndReturn
+   */
+  export type CheatingIncidentUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CheatingIncident
+     */
+    select?: CheatingIncidentSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the CheatingIncident
+     */
+    omit?: CheatingIncidentOmit<ExtArgs> | null
+    /**
+     * The data used to update CheatingIncidents.
+     */
+    data: XOR<CheatingIncidentUpdateManyMutationInput, CheatingIncidentUncheckedUpdateManyInput>
+    /**
+     * Filter which CheatingIncidents to update
+     */
+    where?: CheatingIncidentWhereInput
+    /**
+     * Limit how many CheatingIncidents to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CheatingIncidentIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * CheatingIncident upsert
+   */
+  export type CheatingIncidentUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CheatingIncident
+     */
+    select?: CheatingIncidentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CheatingIncident
+     */
+    omit?: CheatingIncidentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CheatingIncidentInclude<ExtArgs> | null
+    /**
+     * The filter to search for the CheatingIncident to update in case it exists.
+     */
+    where: CheatingIncidentWhereUniqueInput
+    /**
+     * In case the CheatingIncident found by the `where` argument doesn't exist, create a new CheatingIncident with this data.
+     */
+    create: XOR<CheatingIncidentCreateInput, CheatingIncidentUncheckedCreateInput>
+    /**
+     * In case the CheatingIncident was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<CheatingIncidentUpdateInput, CheatingIncidentUncheckedUpdateInput>
+  }
+
+  /**
+   * CheatingIncident delete
+   */
+  export type CheatingIncidentDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CheatingIncident
+     */
+    select?: CheatingIncidentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CheatingIncident
+     */
+    omit?: CheatingIncidentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CheatingIncidentInclude<ExtArgs> | null
+    /**
+     * Filter which CheatingIncident to delete.
+     */
+    where: CheatingIncidentWhereUniqueInput
+  }
+
+  /**
+   * CheatingIncident deleteMany
+   */
+  export type CheatingIncidentDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CheatingIncidents to delete
+     */
+    where?: CheatingIncidentWhereInput
+    /**
+     * Limit how many CheatingIncidents to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * CheatingIncident without action
+   */
+  export type CheatingIncidentDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CheatingIncident
+     */
+    select?: CheatingIncidentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CheatingIncident
+     */
+    omit?: CheatingIncidentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CheatingIncidentInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -7091,6 +8364,17 @@ export namespace Prisma {
   export type UserExamAnswerScalarFieldEnum = (typeof UserExamAnswerScalarFieldEnum)[keyof typeof UserExamAnswerScalarFieldEnum]
 
 
+  export const CheatingIncidentScalarFieldEnum: {
+    id: 'id',
+    studentId: 'studentId',
+    examId: 'examId',
+    timestamp: 'timestamp',
+    details: 'details'
+  };
+
+  export type CheatingIncidentScalarFieldEnum = (typeof CheatingIncidentScalarFieldEnum)[keyof typeof CheatingIncidentScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -7105,6 +8389,14 @@ export namespace Prisma {
   };
 
   export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+  export const NullsOrder: {
+    first: 'first',
+    last: 'last'
+  };
+
+  export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
 
   /**
@@ -7189,6 +8481,7 @@ export namespace Prisma {
     password?: StringFilter<"User"> | string
     exams?: ExamListRelationFilter
     results?: ResultListRelationFilter
+    cheatingIncidents?: CheatingIncidentListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -7199,6 +8492,7 @@ export namespace Prisma {
     password?: SortOrder
     exams?: ExamOrderByRelationAggregateInput
     results?: ResultOrderByRelationAggregateInput
+    cheatingIncidents?: CheatingIncidentOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -7212,6 +8506,7 @@ export namespace Prisma {
     password?: StringFilter<"User"> | string
     exams?: ExamListRelationFilter
     results?: ResultListRelationFilter
+    cheatingIncidents?: CheatingIncidentListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -7255,6 +8550,7 @@ export namespace Prisma {
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     questions?: QuestionListRelationFilter
     results?: ResultListRelationFilter
+    cheatingIncidents?: CheatingIncidentListRelationFilter
   }
 
   export type ExamOrderByWithRelationInput = {
@@ -7271,6 +8567,7 @@ export namespace Prisma {
     user?: UserOrderByWithRelationInput
     questions?: QuestionOrderByRelationAggregateInput
     results?: ResultOrderByRelationAggregateInput
+    cheatingIncidents?: CheatingIncidentOrderByRelationAggregateInput
   }
 
   export type ExamWhereUniqueInput = Prisma.AtLeast<{
@@ -7290,6 +8587,7 @@ export namespace Prisma {
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     questions?: QuestionListRelationFilter
     results?: ResultListRelationFilter
+    cheatingIncidents?: CheatingIncidentListRelationFilter
   }, "id">
 
   export type ExamOrderByWithAggregationInput = {
@@ -7503,6 +8801,66 @@ export namespace Prisma {
     answer?: StringWithAggregatesFilter<"UserExamAnswer"> | string
   }
 
+  export type CheatingIncidentWhereInput = {
+    AND?: CheatingIncidentWhereInput | CheatingIncidentWhereInput[]
+    OR?: CheatingIncidentWhereInput[]
+    NOT?: CheatingIncidentWhereInput | CheatingIncidentWhereInput[]
+    id?: IntFilter<"CheatingIncident"> | number
+    studentId?: IntFilter<"CheatingIncident"> | number
+    examId?: IntFilter<"CheatingIncident"> | number
+    timestamp?: DateTimeFilter<"CheatingIncident"> | Date | string
+    details?: StringNullableFilter<"CheatingIncident"> | string | null
+    student?: XOR<UserScalarRelationFilter, UserWhereInput>
+    exam?: XOR<ExamScalarRelationFilter, ExamWhereInput>
+  }
+
+  export type CheatingIncidentOrderByWithRelationInput = {
+    id?: SortOrder
+    studentId?: SortOrder
+    examId?: SortOrder
+    timestamp?: SortOrder
+    details?: SortOrderInput | SortOrder
+    student?: UserOrderByWithRelationInput
+    exam?: ExamOrderByWithRelationInput
+  }
+
+  export type CheatingIncidentWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: CheatingIncidentWhereInput | CheatingIncidentWhereInput[]
+    OR?: CheatingIncidentWhereInput[]
+    NOT?: CheatingIncidentWhereInput | CheatingIncidentWhereInput[]
+    studentId?: IntFilter<"CheatingIncident"> | number
+    examId?: IntFilter<"CheatingIncident"> | number
+    timestamp?: DateTimeFilter<"CheatingIncident"> | Date | string
+    details?: StringNullableFilter<"CheatingIncident"> | string | null
+    student?: XOR<UserScalarRelationFilter, UserWhereInput>
+    exam?: XOR<ExamScalarRelationFilter, ExamWhereInput>
+  }, "id">
+
+  export type CheatingIncidentOrderByWithAggregationInput = {
+    id?: SortOrder
+    studentId?: SortOrder
+    examId?: SortOrder
+    timestamp?: SortOrder
+    details?: SortOrderInput | SortOrder
+    _count?: CheatingIncidentCountOrderByAggregateInput
+    _avg?: CheatingIncidentAvgOrderByAggregateInput
+    _max?: CheatingIncidentMaxOrderByAggregateInput
+    _min?: CheatingIncidentMinOrderByAggregateInput
+    _sum?: CheatingIncidentSumOrderByAggregateInput
+  }
+
+  export type CheatingIncidentScalarWhereWithAggregatesInput = {
+    AND?: CheatingIncidentScalarWhereWithAggregatesInput | CheatingIncidentScalarWhereWithAggregatesInput[]
+    OR?: CheatingIncidentScalarWhereWithAggregatesInput[]
+    NOT?: CheatingIncidentScalarWhereWithAggregatesInput | CheatingIncidentScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"CheatingIncident"> | number
+    studentId?: IntWithAggregatesFilter<"CheatingIncident"> | number
+    examId?: IntWithAggregatesFilter<"CheatingIncident"> | number
+    timestamp?: DateTimeWithAggregatesFilter<"CheatingIncident"> | Date | string
+    details?: StringNullableWithAggregatesFilter<"CheatingIncident"> | string | null
+  }
+
   export type UserCreateInput = {
     name: string
     email: string
@@ -7510,6 +8868,7 @@ export namespace Prisma {
     password: string
     exams?: ExamCreateNestedManyWithoutUserInput
     results?: ResultCreateNestedManyWithoutUserInput
+    cheatingIncidents?: CheatingIncidentCreateNestedManyWithoutStudentInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -7520,6 +8879,7 @@ export namespace Prisma {
     password: string
     exams?: ExamUncheckedCreateNestedManyWithoutUserInput
     results?: ResultUncheckedCreateNestedManyWithoutUserInput
+    cheatingIncidents?: CheatingIncidentUncheckedCreateNestedManyWithoutStudentInput
   }
 
   export type UserUpdateInput = {
@@ -7529,6 +8889,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     exams?: ExamUpdateManyWithoutUserNestedInput
     results?: ResultUpdateManyWithoutUserNestedInput
+    cheatingIncidents?: CheatingIncidentUpdateManyWithoutStudentNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -7539,6 +8900,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     exams?: ExamUncheckedUpdateManyWithoutUserNestedInput
     results?: ResultUncheckedUpdateManyWithoutUserNestedInput
+    cheatingIncidents?: CheatingIncidentUncheckedUpdateManyWithoutStudentNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -7576,6 +8938,7 @@ export namespace Prisma {
     user: UserCreateNestedOneWithoutExamsInput
     questions?: QuestionCreateNestedManyWithoutExamInput
     results?: ResultCreateNestedManyWithoutExamInput
+    cheatingIncidents?: CheatingIncidentCreateNestedManyWithoutExamInput
   }
 
   export type ExamUncheckedCreateInput = {
@@ -7591,6 +8954,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     questions?: QuestionUncheckedCreateNestedManyWithoutExamInput
     results?: ResultUncheckedCreateNestedManyWithoutExamInput
+    cheatingIncidents?: CheatingIncidentUncheckedCreateNestedManyWithoutExamInput
   }
 
   export type ExamUpdateInput = {
@@ -7605,6 +8969,7 @@ export namespace Prisma {
     user?: UserUpdateOneRequiredWithoutExamsNestedInput
     questions?: QuestionUpdateManyWithoutExamNestedInput
     results?: ResultUpdateManyWithoutExamNestedInput
+    cheatingIncidents?: CheatingIncidentUpdateManyWithoutExamNestedInput
   }
 
   export type ExamUncheckedUpdateInput = {
@@ -7620,6 +8985,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     questions?: QuestionUncheckedUpdateManyWithoutExamNestedInput
     results?: ResultUncheckedUpdateManyWithoutExamNestedInput
+    cheatingIncidents?: CheatingIncidentUncheckedUpdateManyWithoutExamNestedInput
   }
 
   export type ExamCreateManyInput = {
@@ -7818,6 +9184,57 @@ export namespace Prisma {
     answer?: StringFieldUpdateOperationsInput | string
   }
 
+  export type CheatingIncidentCreateInput = {
+    timestamp?: Date | string
+    details?: string | null
+    student: UserCreateNestedOneWithoutCheatingIncidentsInput
+    exam: ExamCreateNestedOneWithoutCheatingIncidentsInput
+  }
+
+  export type CheatingIncidentUncheckedCreateInput = {
+    id?: number
+    studentId: number
+    examId: number
+    timestamp?: Date | string
+    details?: string | null
+  }
+
+  export type CheatingIncidentUpdateInput = {
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+    details?: NullableStringFieldUpdateOperationsInput | string | null
+    student?: UserUpdateOneRequiredWithoutCheatingIncidentsNestedInput
+    exam?: ExamUpdateOneRequiredWithoutCheatingIncidentsNestedInput
+  }
+
+  export type CheatingIncidentUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    studentId?: IntFieldUpdateOperationsInput | number
+    examId?: IntFieldUpdateOperationsInput | number
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+    details?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type CheatingIncidentCreateManyInput = {
+    id?: number
+    studentId: number
+    examId: number
+    timestamp?: Date | string
+    details?: string | null
+  }
+
+  export type CheatingIncidentUpdateManyMutationInput = {
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+    details?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type CheatingIncidentUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    studentId?: IntFieldUpdateOperationsInput | number
+    examId?: IntFieldUpdateOperationsInput | number
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+    details?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
   export type IntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -7856,11 +9273,21 @@ export namespace Prisma {
     none?: ResultWhereInput
   }
 
+  export type CheatingIncidentListRelationFilter = {
+    every?: CheatingIncidentWhereInput
+    some?: CheatingIncidentWhereInput
+    none?: CheatingIncidentWhereInput
+  }
+
   export type ExamOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
   export type ResultOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type CheatingIncidentOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -8165,6 +9592,80 @@ export namespace Prisma {
     resultId?: SortOrder
   }
 
+  export type StringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
+  }
+
+  export type CheatingIncidentCountOrderByAggregateInput = {
+    id?: SortOrder
+    studentId?: SortOrder
+    examId?: SortOrder
+    timestamp?: SortOrder
+    details?: SortOrder
+  }
+
+  export type CheatingIncidentAvgOrderByAggregateInput = {
+    id?: SortOrder
+    studentId?: SortOrder
+    examId?: SortOrder
+  }
+
+  export type CheatingIncidentMaxOrderByAggregateInput = {
+    id?: SortOrder
+    studentId?: SortOrder
+    examId?: SortOrder
+    timestamp?: SortOrder
+    details?: SortOrder
+  }
+
+  export type CheatingIncidentMinOrderByAggregateInput = {
+    id?: SortOrder
+    studentId?: SortOrder
+    examId?: SortOrder
+    timestamp?: SortOrder
+    details?: SortOrder
+  }
+
+  export type CheatingIncidentSumOrderByAggregateInput = {
+    id?: SortOrder
+    studentId?: SortOrder
+    examId?: SortOrder
+  }
+
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
   export type ExamCreateNestedManyWithoutUserInput = {
     create?: XOR<ExamCreateWithoutUserInput, ExamUncheckedCreateWithoutUserInput> | ExamCreateWithoutUserInput[] | ExamUncheckedCreateWithoutUserInput[]
     connectOrCreate?: ExamCreateOrConnectWithoutUserInput | ExamCreateOrConnectWithoutUserInput[]
@@ -8179,6 +9680,13 @@ export namespace Prisma {
     connect?: ResultWhereUniqueInput | ResultWhereUniqueInput[]
   }
 
+  export type CheatingIncidentCreateNestedManyWithoutStudentInput = {
+    create?: XOR<CheatingIncidentCreateWithoutStudentInput, CheatingIncidentUncheckedCreateWithoutStudentInput> | CheatingIncidentCreateWithoutStudentInput[] | CheatingIncidentUncheckedCreateWithoutStudentInput[]
+    connectOrCreate?: CheatingIncidentCreateOrConnectWithoutStudentInput | CheatingIncidentCreateOrConnectWithoutStudentInput[]
+    createMany?: CheatingIncidentCreateManyStudentInputEnvelope
+    connect?: CheatingIncidentWhereUniqueInput | CheatingIncidentWhereUniqueInput[]
+  }
+
   export type ExamUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<ExamCreateWithoutUserInput, ExamUncheckedCreateWithoutUserInput> | ExamCreateWithoutUserInput[] | ExamUncheckedCreateWithoutUserInput[]
     connectOrCreate?: ExamCreateOrConnectWithoutUserInput | ExamCreateOrConnectWithoutUserInput[]
@@ -8191,6 +9699,13 @@ export namespace Prisma {
     connectOrCreate?: ResultCreateOrConnectWithoutUserInput | ResultCreateOrConnectWithoutUserInput[]
     createMany?: ResultCreateManyUserInputEnvelope
     connect?: ResultWhereUniqueInput | ResultWhereUniqueInput[]
+  }
+
+  export type CheatingIncidentUncheckedCreateNestedManyWithoutStudentInput = {
+    create?: XOR<CheatingIncidentCreateWithoutStudentInput, CheatingIncidentUncheckedCreateWithoutStudentInput> | CheatingIncidentCreateWithoutStudentInput[] | CheatingIncidentUncheckedCreateWithoutStudentInput[]
+    connectOrCreate?: CheatingIncidentCreateOrConnectWithoutStudentInput | CheatingIncidentCreateOrConnectWithoutStudentInput[]
+    createMany?: CheatingIncidentCreateManyStudentInputEnvelope
+    connect?: CheatingIncidentWhereUniqueInput | CheatingIncidentWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -8223,6 +9738,20 @@ export namespace Prisma {
     update?: ResultUpdateWithWhereUniqueWithoutUserInput | ResultUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: ResultUpdateManyWithWhereWithoutUserInput | ResultUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: ResultScalarWhereInput | ResultScalarWhereInput[]
+  }
+
+  export type CheatingIncidentUpdateManyWithoutStudentNestedInput = {
+    create?: XOR<CheatingIncidentCreateWithoutStudentInput, CheatingIncidentUncheckedCreateWithoutStudentInput> | CheatingIncidentCreateWithoutStudentInput[] | CheatingIncidentUncheckedCreateWithoutStudentInput[]
+    connectOrCreate?: CheatingIncidentCreateOrConnectWithoutStudentInput | CheatingIncidentCreateOrConnectWithoutStudentInput[]
+    upsert?: CheatingIncidentUpsertWithWhereUniqueWithoutStudentInput | CheatingIncidentUpsertWithWhereUniqueWithoutStudentInput[]
+    createMany?: CheatingIncidentCreateManyStudentInputEnvelope
+    set?: CheatingIncidentWhereUniqueInput | CheatingIncidentWhereUniqueInput[]
+    disconnect?: CheatingIncidentWhereUniqueInput | CheatingIncidentWhereUniqueInput[]
+    delete?: CheatingIncidentWhereUniqueInput | CheatingIncidentWhereUniqueInput[]
+    connect?: CheatingIncidentWhereUniqueInput | CheatingIncidentWhereUniqueInput[]
+    update?: CheatingIncidentUpdateWithWhereUniqueWithoutStudentInput | CheatingIncidentUpdateWithWhereUniqueWithoutStudentInput[]
+    updateMany?: CheatingIncidentUpdateManyWithWhereWithoutStudentInput | CheatingIncidentUpdateManyWithWhereWithoutStudentInput[]
+    deleteMany?: CheatingIncidentScalarWhereInput | CheatingIncidentScalarWhereInput[]
   }
 
   export type IntFieldUpdateOperationsInput = {
@@ -8261,6 +9790,20 @@ export namespace Prisma {
     deleteMany?: ResultScalarWhereInput | ResultScalarWhereInput[]
   }
 
+  export type CheatingIncidentUncheckedUpdateManyWithoutStudentNestedInput = {
+    create?: XOR<CheatingIncidentCreateWithoutStudentInput, CheatingIncidentUncheckedCreateWithoutStudentInput> | CheatingIncidentCreateWithoutStudentInput[] | CheatingIncidentUncheckedCreateWithoutStudentInput[]
+    connectOrCreate?: CheatingIncidentCreateOrConnectWithoutStudentInput | CheatingIncidentCreateOrConnectWithoutStudentInput[]
+    upsert?: CheatingIncidentUpsertWithWhereUniqueWithoutStudentInput | CheatingIncidentUpsertWithWhereUniqueWithoutStudentInput[]
+    createMany?: CheatingIncidentCreateManyStudentInputEnvelope
+    set?: CheatingIncidentWhereUniqueInput | CheatingIncidentWhereUniqueInput[]
+    disconnect?: CheatingIncidentWhereUniqueInput | CheatingIncidentWhereUniqueInput[]
+    delete?: CheatingIncidentWhereUniqueInput | CheatingIncidentWhereUniqueInput[]
+    connect?: CheatingIncidentWhereUniqueInput | CheatingIncidentWhereUniqueInput[]
+    update?: CheatingIncidentUpdateWithWhereUniqueWithoutStudentInput | CheatingIncidentUpdateWithWhereUniqueWithoutStudentInput[]
+    updateMany?: CheatingIncidentUpdateManyWithWhereWithoutStudentInput | CheatingIncidentUpdateManyWithWhereWithoutStudentInput[]
+    deleteMany?: CheatingIncidentScalarWhereInput | CheatingIncidentScalarWhereInput[]
+  }
+
   export type UserCreateNestedOneWithoutExamsInput = {
     create?: XOR<UserCreateWithoutExamsInput, UserUncheckedCreateWithoutExamsInput>
     connectOrCreate?: UserCreateOrConnectWithoutExamsInput
@@ -8281,6 +9824,13 @@ export namespace Prisma {
     connect?: ResultWhereUniqueInput | ResultWhereUniqueInput[]
   }
 
+  export type CheatingIncidentCreateNestedManyWithoutExamInput = {
+    create?: XOR<CheatingIncidentCreateWithoutExamInput, CheatingIncidentUncheckedCreateWithoutExamInput> | CheatingIncidentCreateWithoutExamInput[] | CheatingIncidentUncheckedCreateWithoutExamInput[]
+    connectOrCreate?: CheatingIncidentCreateOrConnectWithoutExamInput | CheatingIncidentCreateOrConnectWithoutExamInput[]
+    createMany?: CheatingIncidentCreateManyExamInputEnvelope
+    connect?: CheatingIncidentWhereUniqueInput | CheatingIncidentWhereUniqueInput[]
+  }
+
   export type QuestionUncheckedCreateNestedManyWithoutExamInput = {
     create?: XOR<QuestionCreateWithoutExamInput, QuestionUncheckedCreateWithoutExamInput> | QuestionCreateWithoutExamInput[] | QuestionUncheckedCreateWithoutExamInput[]
     connectOrCreate?: QuestionCreateOrConnectWithoutExamInput | QuestionCreateOrConnectWithoutExamInput[]
@@ -8293,6 +9843,13 @@ export namespace Prisma {
     connectOrCreate?: ResultCreateOrConnectWithoutExamInput | ResultCreateOrConnectWithoutExamInput[]
     createMany?: ResultCreateManyExamInputEnvelope
     connect?: ResultWhereUniqueInput | ResultWhereUniqueInput[]
+  }
+
+  export type CheatingIncidentUncheckedCreateNestedManyWithoutExamInput = {
+    create?: XOR<CheatingIncidentCreateWithoutExamInput, CheatingIncidentUncheckedCreateWithoutExamInput> | CheatingIncidentCreateWithoutExamInput[] | CheatingIncidentUncheckedCreateWithoutExamInput[]
+    connectOrCreate?: CheatingIncidentCreateOrConnectWithoutExamInput | CheatingIncidentCreateOrConnectWithoutExamInput[]
+    createMany?: CheatingIncidentCreateManyExamInputEnvelope
+    connect?: CheatingIncidentWhereUniqueInput | CheatingIncidentWhereUniqueInput[]
   }
 
   export type DateTimeFieldUpdateOperationsInput = {
@@ -8335,6 +9892,20 @@ export namespace Prisma {
     deleteMany?: ResultScalarWhereInput | ResultScalarWhereInput[]
   }
 
+  export type CheatingIncidentUpdateManyWithoutExamNestedInput = {
+    create?: XOR<CheatingIncidentCreateWithoutExamInput, CheatingIncidentUncheckedCreateWithoutExamInput> | CheatingIncidentCreateWithoutExamInput[] | CheatingIncidentUncheckedCreateWithoutExamInput[]
+    connectOrCreate?: CheatingIncidentCreateOrConnectWithoutExamInput | CheatingIncidentCreateOrConnectWithoutExamInput[]
+    upsert?: CheatingIncidentUpsertWithWhereUniqueWithoutExamInput | CheatingIncidentUpsertWithWhereUniqueWithoutExamInput[]
+    createMany?: CheatingIncidentCreateManyExamInputEnvelope
+    set?: CheatingIncidentWhereUniqueInput | CheatingIncidentWhereUniqueInput[]
+    disconnect?: CheatingIncidentWhereUniqueInput | CheatingIncidentWhereUniqueInput[]
+    delete?: CheatingIncidentWhereUniqueInput | CheatingIncidentWhereUniqueInput[]
+    connect?: CheatingIncidentWhereUniqueInput | CheatingIncidentWhereUniqueInput[]
+    update?: CheatingIncidentUpdateWithWhereUniqueWithoutExamInput | CheatingIncidentUpdateWithWhereUniqueWithoutExamInput[]
+    updateMany?: CheatingIncidentUpdateManyWithWhereWithoutExamInput | CheatingIncidentUpdateManyWithWhereWithoutExamInput[]
+    deleteMany?: CheatingIncidentScalarWhereInput | CheatingIncidentScalarWhereInput[]
+  }
+
   export type QuestionUncheckedUpdateManyWithoutExamNestedInput = {
     create?: XOR<QuestionCreateWithoutExamInput, QuestionUncheckedCreateWithoutExamInput> | QuestionCreateWithoutExamInput[] | QuestionUncheckedCreateWithoutExamInput[]
     connectOrCreate?: QuestionCreateOrConnectWithoutExamInput | QuestionCreateOrConnectWithoutExamInput[]
@@ -8361,6 +9932,20 @@ export namespace Prisma {
     update?: ResultUpdateWithWhereUniqueWithoutExamInput | ResultUpdateWithWhereUniqueWithoutExamInput[]
     updateMany?: ResultUpdateManyWithWhereWithoutExamInput | ResultUpdateManyWithWhereWithoutExamInput[]
     deleteMany?: ResultScalarWhereInput | ResultScalarWhereInput[]
+  }
+
+  export type CheatingIncidentUncheckedUpdateManyWithoutExamNestedInput = {
+    create?: XOR<CheatingIncidentCreateWithoutExamInput, CheatingIncidentUncheckedCreateWithoutExamInput> | CheatingIncidentCreateWithoutExamInput[] | CheatingIncidentUncheckedCreateWithoutExamInput[]
+    connectOrCreate?: CheatingIncidentCreateOrConnectWithoutExamInput | CheatingIncidentCreateOrConnectWithoutExamInput[]
+    upsert?: CheatingIncidentUpsertWithWhereUniqueWithoutExamInput | CheatingIncidentUpsertWithWhereUniqueWithoutExamInput[]
+    createMany?: CheatingIncidentCreateManyExamInputEnvelope
+    set?: CheatingIncidentWhereUniqueInput | CheatingIncidentWhereUniqueInput[]
+    disconnect?: CheatingIncidentWhereUniqueInput | CheatingIncidentWhereUniqueInput[]
+    delete?: CheatingIncidentWhereUniqueInput | CheatingIncidentWhereUniqueInput[]
+    connect?: CheatingIncidentWhereUniqueInput | CheatingIncidentWhereUniqueInput[]
+    update?: CheatingIncidentUpdateWithWhereUniqueWithoutExamInput | CheatingIncidentUpdateWithWhereUniqueWithoutExamInput[]
+    updateMany?: CheatingIncidentUpdateManyWithWhereWithoutExamInput | CheatingIncidentUpdateManyWithWhereWithoutExamInput[]
+    deleteMany?: CheatingIncidentScalarWhereInput | CheatingIncidentScalarWhereInput[]
   }
 
   export type QuestionCreateoptionsInput = {
@@ -8464,6 +10049,38 @@ export namespace Prisma {
     delete?: ResultWhereInput | boolean
     connect?: ResultWhereUniqueInput
     update?: XOR<XOR<ResultUpdateToOneWithWhereWithoutAnswersInput, ResultUpdateWithoutAnswersInput>, ResultUncheckedUpdateWithoutAnswersInput>
+  }
+
+  export type UserCreateNestedOneWithoutCheatingIncidentsInput = {
+    create?: XOR<UserCreateWithoutCheatingIncidentsInput, UserUncheckedCreateWithoutCheatingIncidentsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCheatingIncidentsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type ExamCreateNestedOneWithoutCheatingIncidentsInput = {
+    create?: XOR<ExamCreateWithoutCheatingIncidentsInput, ExamUncheckedCreateWithoutCheatingIncidentsInput>
+    connectOrCreate?: ExamCreateOrConnectWithoutCheatingIncidentsInput
+    connect?: ExamWhereUniqueInput
+  }
+
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
+  }
+
+  export type UserUpdateOneRequiredWithoutCheatingIncidentsNestedInput = {
+    create?: XOR<UserCreateWithoutCheatingIncidentsInput, UserUncheckedCreateWithoutCheatingIncidentsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCheatingIncidentsInput
+    upsert?: UserUpsertWithoutCheatingIncidentsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCheatingIncidentsInput, UserUpdateWithoutCheatingIncidentsInput>, UserUncheckedUpdateWithoutCheatingIncidentsInput>
+  }
+
+  export type ExamUpdateOneRequiredWithoutCheatingIncidentsNestedInput = {
+    create?: XOR<ExamCreateWithoutCheatingIncidentsInput, ExamUncheckedCreateWithoutCheatingIncidentsInput>
+    connectOrCreate?: ExamCreateOrConnectWithoutCheatingIncidentsInput
+    upsert?: ExamUpsertWithoutCheatingIncidentsInput
+    connect?: ExamWhereUniqueInput
+    update?: XOR<XOR<ExamUpdateToOneWithWhereWithoutCheatingIncidentsInput, ExamUpdateWithoutCheatingIncidentsInput>, ExamUncheckedUpdateWithoutCheatingIncidentsInput>
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -8573,6 +10190,48 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>
   }
 
+  export type NestedStringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
   export type ExamCreateWithoutUserInput = {
     title: string
     description: string
@@ -8584,6 +10243,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     questions?: QuestionCreateNestedManyWithoutExamInput
     results?: ResultCreateNestedManyWithoutExamInput
+    cheatingIncidents?: CheatingIncidentCreateNestedManyWithoutExamInput
   }
 
   export type ExamUncheckedCreateWithoutUserInput = {
@@ -8598,6 +10258,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     questions?: QuestionUncheckedCreateNestedManyWithoutExamInput
     results?: ResultUncheckedCreateNestedManyWithoutExamInput
+    cheatingIncidents?: CheatingIncidentUncheckedCreateNestedManyWithoutExamInput
   }
 
   export type ExamCreateOrConnectWithoutUserInput = {
@@ -8634,6 +10295,29 @@ export namespace Prisma {
 
   export type ResultCreateManyUserInputEnvelope = {
     data: ResultCreateManyUserInput | ResultCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type CheatingIncidentCreateWithoutStudentInput = {
+    timestamp?: Date | string
+    details?: string | null
+    exam: ExamCreateNestedOneWithoutCheatingIncidentsInput
+  }
+
+  export type CheatingIncidentUncheckedCreateWithoutStudentInput = {
+    id?: number
+    examId: number
+    timestamp?: Date | string
+    details?: string | null
+  }
+
+  export type CheatingIncidentCreateOrConnectWithoutStudentInput = {
+    where: CheatingIncidentWhereUniqueInput
+    create: XOR<CheatingIncidentCreateWithoutStudentInput, CheatingIncidentUncheckedCreateWithoutStudentInput>
+  }
+
+  export type CheatingIncidentCreateManyStudentInputEnvelope = {
+    data: CheatingIncidentCreateManyStudentInput | CheatingIncidentCreateManyStudentInput[]
     skipDuplicates?: boolean
   }
 
@@ -8697,12 +10381,40 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Result"> | Date | string
   }
 
+  export type CheatingIncidentUpsertWithWhereUniqueWithoutStudentInput = {
+    where: CheatingIncidentWhereUniqueInput
+    update: XOR<CheatingIncidentUpdateWithoutStudentInput, CheatingIncidentUncheckedUpdateWithoutStudentInput>
+    create: XOR<CheatingIncidentCreateWithoutStudentInput, CheatingIncidentUncheckedCreateWithoutStudentInput>
+  }
+
+  export type CheatingIncidentUpdateWithWhereUniqueWithoutStudentInput = {
+    where: CheatingIncidentWhereUniqueInput
+    data: XOR<CheatingIncidentUpdateWithoutStudentInput, CheatingIncidentUncheckedUpdateWithoutStudentInput>
+  }
+
+  export type CheatingIncidentUpdateManyWithWhereWithoutStudentInput = {
+    where: CheatingIncidentScalarWhereInput
+    data: XOR<CheatingIncidentUpdateManyMutationInput, CheatingIncidentUncheckedUpdateManyWithoutStudentInput>
+  }
+
+  export type CheatingIncidentScalarWhereInput = {
+    AND?: CheatingIncidentScalarWhereInput | CheatingIncidentScalarWhereInput[]
+    OR?: CheatingIncidentScalarWhereInput[]
+    NOT?: CheatingIncidentScalarWhereInput | CheatingIncidentScalarWhereInput[]
+    id?: IntFilter<"CheatingIncident"> | number
+    studentId?: IntFilter<"CheatingIncident"> | number
+    examId?: IntFilter<"CheatingIncident"> | number
+    timestamp?: DateTimeFilter<"CheatingIncident"> | Date | string
+    details?: StringNullableFilter<"CheatingIncident"> | string | null
+  }
+
   export type UserCreateWithoutExamsInput = {
     name: string
     email: string
     role: string
     password: string
     results?: ResultCreateNestedManyWithoutUserInput
+    cheatingIncidents?: CheatingIncidentCreateNestedManyWithoutStudentInput
   }
 
   export type UserUncheckedCreateWithoutExamsInput = {
@@ -8712,6 +10424,7 @@ export namespace Prisma {
     role: string
     password: string
     results?: ResultUncheckedCreateNestedManyWithoutUserInput
+    cheatingIncidents?: CheatingIncidentUncheckedCreateNestedManyWithoutStudentInput
   }
 
   export type UserCreateOrConnectWithoutExamsInput = {
@@ -8771,6 +10484,29 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type CheatingIncidentCreateWithoutExamInput = {
+    timestamp?: Date | string
+    details?: string | null
+    student: UserCreateNestedOneWithoutCheatingIncidentsInput
+  }
+
+  export type CheatingIncidentUncheckedCreateWithoutExamInput = {
+    id?: number
+    studentId: number
+    timestamp?: Date | string
+    details?: string | null
+  }
+
+  export type CheatingIncidentCreateOrConnectWithoutExamInput = {
+    where: CheatingIncidentWhereUniqueInput
+    create: XOR<CheatingIncidentCreateWithoutExamInput, CheatingIncidentUncheckedCreateWithoutExamInput>
+  }
+
+  export type CheatingIncidentCreateManyExamInputEnvelope = {
+    data: CheatingIncidentCreateManyExamInput | CheatingIncidentCreateManyExamInput[]
+    skipDuplicates?: boolean
+  }
+
   export type UserUpsertWithoutExamsInput = {
     update: XOR<UserUpdateWithoutExamsInput, UserUncheckedUpdateWithoutExamsInput>
     create: XOR<UserCreateWithoutExamsInput, UserUncheckedCreateWithoutExamsInput>
@@ -8788,6 +10524,7 @@ export namespace Prisma {
     role?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     results?: ResultUpdateManyWithoutUserNestedInput
+    cheatingIncidents?: CheatingIncidentUpdateManyWithoutStudentNestedInput
   }
 
   export type UserUncheckedUpdateWithoutExamsInput = {
@@ -8797,6 +10534,7 @@ export namespace Prisma {
     role?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     results?: ResultUncheckedUpdateManyWithoutUserNestedInput
+    cheatingIncidents?: CheatingIncidentUncheckedUpdateManyWithoutStudentNestedInput
   }
 
   export type QuestionUpsertWithWhereUniqueWithoutExamInput = {
@@ -8843,6 +10581,22 @@ export namespace Prisma {
     data: XOR<ResultUpdateManyMutationInput, ResultUncheckedUpdateManyWithoutExamInput>
   }
 
+  export type CheatingIncidentUpsertWithWhereUniqueWithoutExamInput = {
+    where: CheatingIncidentWhereUniqueInput
+    update: XOR<CheatingIncidentUpdateWithoutExamInput, CheatingIncidentUncheckedUpdateWithoutExamInput>
+    create: XOR<CheatingIncidentCreateWithoutExamInput, CheatingIncidentUncheckedCreateWithoutExamInput>
+  }
+
+  export type CheatingIncidentUpdateWithWhereUniqueWithoutExamInput = {
+    where: CheatingIncidentWhereUniqueInput
+    data: XOR<CheatingIncidentUpdateWithoutExamInput, CheatingIncidentUncheckedUpdateWithoutExamInput>
+  }
+
+  export type CheatingIncidentUpdateManyWithWhereWithoutExamInput = {
+    where: CheatingIncidentScalarWhereInput
+    data: XOR<CheatingIncidentUpdateManyMutationInput, CheatingIncidentUncheckedUpdateManyWithoutExamInput>
+  }
+
   export type ExamCreateWithoutQuestionsInput = {
     title: string
     description: string
@@ -8854,6 +10608,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutExamsInput
     results?: ResultCreateNestedManyWithoutExamInput
+    cheatingIncidents?: CheatingIncidentCreateNestedManyWithoutExamInput
   }
 
   export type ExamUncheckedCreateWithoutQuestionsInput = {
@@ -8868,6 +10623,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     results?: ResultUncheckedCreateNestedManyWithoutExamInput
+    cheatingIncidents?: CheatingIncidentUncheckedCreateNestedManyWithoutExamInput
   }
 
   export type ExamCreateOrConnectWithoutQuestionsInput = {
@@ -8897,6 +10653,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutExamsNestedInput
     results?: ResultUpdateManyWithoutExamNestedInput
+    cheatingIncidents?: CheatingIncidentUpdateManyWithoutExamNestedInput
   }
 
   export type ExamUncheckedUpdateWithoutQuestionsInput = {
@@ -8911,6 +10668,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     results?: ResultUncheckedUpdateManyWithoutExamNestedInput
+    cheatingIncidents?: CheatingIncidentUncheckedUpdateManyWithoutExamNestedInput
   }
 
   export type UserExamAnswerCreateWithoutResultInput = {
@@ -8933,6 +10691,7 @@ export namespace Prisma {
     role: string
     password: string
     exams?: ExamCreateNestedManyWithoutUserInput
+    cheatingIncidents?: CheatingIncidentCreateNestedManyWithoutStudentInput
   }
 
   export type UserUncheckedCreateWithoutResultsInput = {
@@ -8942,6 +10701,7 @@ export namespace Prisma {
     role: string
     password: string
     exams?: ExamUncheckedCreateNestedManyWithoutUserInput
+    cheatingIncidents?: CheatingIncidentUncheckedCreateNestedManyWithoutStudentInput
   }
 
   export type UserCreateOrConnectWithoutResultsInput = {
@@ -8960,6 +10720,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutExamsInput
     questions?: QuestionCreateNestedManyWithoutExamInput
+    cheatingIncidents?: CheatingIncidentCreateNestedManyWithoutExamInput
   }
 
   export type ExamUncheckedCreateWithoutResultsInput = {
@@ -8974,6 +10735,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     questions?: QuestionUncheckedCreateNestedManyWithoutExamInput
+    cheatingIncidents?: CheatingIncidentUncheckedCreateNestedManyWithoutExamInput
   }
 
   export type ExamCreateOrConnectWithoutResultsInput = {
@@ -9018,6 +10780,7 @@ export namespace Prisma {
     role?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     exams?: ExamUpdateManyWithoutUserNestedInput
+    cheatingIncidents?: CheatingIncidentUpdateManyWithoutStudentNestedInput
   }
 
   export type UserUncheckedUpdateWithoutResultsInput = {
@@ -9027,6 +10790,7 @@ export namespace Prisma {
     role?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     exams?: ExamUncheckedUpdateManyWithoutUserNestedInput
+    cheatingIncidents?: CheatingIncidentUncheckedUpdateManyWithoutStudentNestedInput
   }
 
   export type ExamUpsertWithoutResultsInput = {
@@ -9051,6 +10815,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutExamsNestedInput
     questions?: QuestionUpdateManyWithoutExamNestedInput
+    cheatingIncidents?: CheatingIncidentUpdateManyWithoutExamNestedInput
   }
 
   export type ExamUncheckedUpdateWithoutResultsInput = {
@@ -9065,6 +10830,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     questions?: QuestionUncheckedUpdateManyWithoutExamNestedInput
+    cheatingIncidents?: CheatingIncidentUncheckedUpdateManyWithoutExamNestedInput
   }
 
   export type ResultCreateWithoutAnswersInput = {
@@ -9117,6 +10883,134 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type UserCreateWithoutCheatingIncidentsInput = {
+    name: string
+    email: string
+    role: string
+    password: string
+    exams?: ExamCreateNestedManyWithoutUserInput
+    results?: ResultCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutCheatingIncidentsInput = {
+    id?: number
+    name: string
+    email: string
+    role: string
+    password: string
+    exams?: ExamUncheckedCreateNestedManyWithoutUserInput
+    results?: ResultUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutCheatingIncidentsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutCheatingIncidentsInput, UserUncheckedCreateWithoutCheatingIncidentsInput>
+  }
+
+  export type ExamCreateWithoutCheatingIncidentsInput = {
+    title: string
+    description: string
+    startDate: Date | string
+    duration: number
+    category: string
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutExamsInput
+    questions?: QuestionCreateNestedManyWithoutExamInput
+    results?: ResultCreateNestedManyWithoutExamInput
+  }
+
+  export type ExamUncheckedCreateWithoutCheatingIncidentsInput = {
+    id?: number
+    title: string
+    description: string
+    startDate: Date | string
+    duration: number
+    category: string
+    status?: string
+    userId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    questions?: QuestionUncheckedCreateNestedManyWithoutExamInput
+    results?: ResultUncheckedCreateNestedManyWithoutExamInput
+  }
+
+  export type ExamCreateOrConnectWithoutCheatingIncidentsInput = {
+    where: ExamWhereUniqueInput
+    create: XOR<ExamCreateWithoutCheatingIncidentsInput, ExamUncheckedCreateWithoutCheatingIncidentsInput>
+  }
+
+  export type UserUpsertWithoutCheatingIncidentsInput = {
+    update: XOR<UserUpdateWithoutCheatingIncidentsInput, UserUncheckedUpdateWithoutCheatingIncidentsInput>
+    create: XOR<UserCreateWithoutCheatingIncidentsInput, UserUncheckedCreateWithoutCheatingIncidentsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutCheatingIncidentsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutCheatingIncidentsInput, UserUncheckedUpdateWithoutCheatingIncidentsInput>
+  }
+
+  export type UserUpdateWithoutCheatingIncidentsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    exams?: ExamUpdateManyWithoutUserNestedInput
+    results?: ResultUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutCheatingIncidentsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    exams?: ExamUncheckedUpdateManyWithoutUserNestedInput
+    results?: ResultUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type ExamUpsertWithoutCheatingIncidentsInput = {
+    update: XOR<ExamUpdateWithoutCheatingIncidentsInput, ExamUncheckedUpdateWithoutCheatingIncidentsInput>
+    create: XOR<ExamCreateWithoutCheatingIncidentsInput, ExamUncheckedCreateWithoutCheatingIncidentsInput>
+    where?: ExamWhereInput
+  }
+
+  export type ExamUpdateToOneWithWhereWithoutCheatingIncidentsInput = {
+    where?: ExamWhereInput
+    data: XOR<ExamUpdateWithoutCheatingIncidentsInput, ExamUncheckedUpdateWithoutCheatingIncidentsInput>
+  }
+
+  export type ExamUpdateWithoutCheatingIncidentsInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    duration?: IntFieldUpdateOperationsInput | number
+    category?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutExamsNestedInput
+    questions?: QuestionUpdateManyWithoutExamNestedInput
+    results?: ResultUpdateManyWithoutExamNestedInput
+  }
+
+  export type ExamUncheckedUpdateWithoutCheatingIncidentsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    duration?: IntFieldUpdateOperationsInput | number
+    category?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    userId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    questions?: QuestionUncheckedUpdateManyWithoutExamNestedInput
+    results?: ResultUncheckedUpdateManyWithoutExamNestedInput
+  }
+
   export type ExamCreateManyUserInput = {
     id?: number
     title: string
@@ -9137,6 +11031,13 @@ export namespace Prisma {
     createdAt?: Date | string
   }
 
+  export type CheatingIncidentCreateManyStudentInput = {
+    id?: number
+    examId: number
+    timestamp?: Date | string
+    details?: string | null
+  }
+
   export type ExamUpdateWithoutUserInput = {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
@@ -9148,6 +11049,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     questions?: QuestionUpdateManyWithoutExamNestedInput
     results?: ResultUpdateManyWithoutExamNestedInput
+    cheatingIncidents?: CheatingIncidentUpdateManyWithoutExamNestedInput
   }
 
   export type ExamUncheckedUpdateWithoutUserInput = {
@@ -9162,6 +11064,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     questions?: QuestionUncheckedUpdateManyWithoutExamNestedInput
     results?: ResultUncheckedUpdateManyWithoutExamNestedInput
+    cheatingIncidents?: CheatingIncidentUncheckedUpdateManyWithoutExamNestedInput
   }
 
   export type ExamUncheckedUpdateManyWithoutUserInput = {
@@ -9201,6 +11104,26 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type CheatingIncidentUpdateWithoutStudentInput = {
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+    details?: NullableStringFieldUpdateOperationsInput | string | null
+    exam?: ExamUpdateOneRequiredWithoutCheatingIncidentsNestedInput
+  }
+
+  export type CheatingIncidentUncheckedUpdateWithoutStudentInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    examId?: IntFieldUpdateOperationsInput | number
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+    details?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type CheatingIncidentUncheckedUpdateManyWithoutStudentInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    examId?: IntFieldUpdateOperationsInput | number
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+    details?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
   export type QuestionCreateManyExamInput = {
     id?: number
     title: string
@@ -9215,6 +11138,13 @@ export namespace Prisma {
     score: number
     passed: boolean
     createdAt?: Date | string
+  }
+
+  export type CheatingIncidentCreateManyExamInput = {
+    id?: number
+    studentId: number
+    timestamp?: Date | string
+    details?: string | null
   }
 
   export type QuestionUpdateWithoutExamInput = {
@@ -9263,6 +11193,26 @@ export namespace Prisma {
     score?: IntFieldUpdateOperationsInput | number
     passed?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CheatingIncidentUpdateWithoutExamInput = {
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+    details?: NullableStringFieldUpdateOperationsInput | string | null
+    student?: UserUpdateOneRequiredWithoutCheatingIncidentsNestedInput
+  }
+
+  export type CheatingIncidentUncheckedUpdateWithoutExamInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    studentId?: IntFieldUpdateOperationsInput | number
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+    details?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type CheatingIncidentUncheckedUpdateManyWithoutExamInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    studentId?: IntFieldUpdateOperationsInput | number
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+    details?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
 

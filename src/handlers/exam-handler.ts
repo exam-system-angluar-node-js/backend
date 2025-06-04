@@ -387,3 +387,48 @@ export const getExamResultHandler = catchAsync(
     });
   }
 );
+
+export const deleteExamHandler = async (req: Request, res: Response) => {
+  const { examId } = req.params;
+
+  try {
+    // First, delete all related records
+    await prisma.userExamAnswer.deleteMany({
+      where: {
+        result: {
+          examId: parseInt(examId)
+        }
+      }
+    });
+
+    await prisma.result.deleteMany({
+      where: {
+        examId: parseInt(examId)
+      }
+    });
+
+    await prisma.question.deleteMany({
+      where: {
+        examId: parseInt(examId)
+      }
+    });
+
+    // Finally, delete the exam
+    const deletedExam = await prisma.exam.delete({
+      where: {
+        id: parseInt(examId)
+      }
+    });
+
+    res.status(200).json({
+      status: 'success',
+      data: deletedExam
+    });
+  } catch (error) {
+    console.error('Error deleting exam:', error);
+    res.status(400).json({
+      status: 'fail',
+      message: 'Failed to delete exam'
+    });
+  }
+};
