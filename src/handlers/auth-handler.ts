@@ -16,6 +16,27 @@ declare global {
   }
 }
 
+export const updateProfile = catchAsync(async (req: Request, res: Response) => {
+  // Ensure userId is a number
+  const userId = Number(req.user?.id || req.currentUser?.id);
+  const { avatar, name, email } = req.body;
+
+  if (!userId) {
+    return res.status(401).json({ success: false, message: 'User not authenticated' });
+  }
+
+  const updatedUser = await prisma.user.update({
+    where: { id: userId },
+    data: {
+      ...(avatar && { avatar }),
+      ...(name && { name }),
+      ...(email && { email }),
+    },
+  });
+
+  res.status(200).json({ success: true, user: updatedUser });
+});
+
 export const currentUser = (
   req: Request,
   res: Response,
