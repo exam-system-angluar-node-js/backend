@@ -130,3 +130,48 @@ export const getUserByIdHandler = catchAsync(async (req: Request, res: Response)
   console.log(`Successfully fetched user with ID: ${userId}`);
   res.status(200).json(user);
 });
+
+// Handler to get all users (for admin and teacher)
+export const getAllUsersHandler = catchAsync(async (req: Request, res: Response) => {
+  const users = await prisma.user.findMany({
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      role: true
+    },
+  });
+
+  // Get exam results for each user
+  const usersWithResults = await Promise.all(
+    users.map(async (user) => {
+      const results = await prisma.result.findMany({
+        where: { userId: user.id },
+        select: {
+          score: true,
+          passed: true,
+        },
+      });
+
+      const totalExams = results.length;
+      const passedExams = results.filter(r => r.passed).length;
+      const averageScore = totalExams > 0
+        ? results.reduce((acc, curr) => acc + curr.score, 0) / totalExams
+        : 0;
+
+      return {
+        ...user,
+        examResults: {
+          totalExams,
+          passedExams,
+          averageScore,
+        },
+      };
+    })
+  );
+
+  res.status(200).json({
+    status: 'success',
+    data: usersWithResults,
+  });
+});

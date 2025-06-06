@@ -62,7 +62,12 @@ export const getDashboardStatsHandler = catchAsync(
 
     // Get total active exams
     const totalExams = await prisma.exam.count({
-      where: { status: 'active' },
+      where: { 
+        status: 'active',
+        questions: {
+          some: {} // Only count exams that have at least one question
+        }
+      },
     });
 
     // Get completed exams and results for the student

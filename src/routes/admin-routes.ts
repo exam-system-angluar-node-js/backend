@@ -5,6 +5,7 @@ import {
   getDashboardStatsHandler,
   getExamResultsHandler,
   getRecentResultsHandler,
+  deleteStudentHandler
 } from '../handlers/admin-handler';
 
 const router = express.Router();
@@ -17,7 +18,9 @@ router.get('/dashboard/exam-results', getExamResultsHandler);
 router.get('/dashboard/exam-results/:examId', getExamResultsHandler);
 
 router.get('/dashboard/recent-results', getRecentResultsHandler);
-// ADD THIS MISSING ROUTE:
 router.get('/dashboard/recent-results/:examId', getRecentResultsHandler);
+
+// Add delete student route
+router.delete('/students/:studentId', deleteStudentHandler);
 
 export { router as AdminRouter };

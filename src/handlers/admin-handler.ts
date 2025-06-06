@@ -233,3 +233,41 @@ export const getRecentResultsHandler = catchAsync(
     }
   }
 );
+
+export const deleteStudentHandler = async (req: Request, res: Response) => {
+  const { studentId } = req.params;
+
+  try {
+    // Delete all related records first
+    await prisma.cheatingReport.deleteMany({
+      where: { studentId: parseInt(studentId) }
+    });
+
+    await prisma.userExamAnswer.deleteMany({
+      where: {
+        result: {
+          userId: parseInt(studentId)
+        }
+      }
+    });
+
+    await prisma.result.deleteMany({
+      where: { userId: parseInt(studentId) }
+    });
+
+    // Finally delete the user
+    await prisma.user.delete({
+      where: { id: parseInt(studentId) }
+    });
+
+    res.status(200).json({
+      status: 'success',
+      message: 'Student and all related data deleted successfully'
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: 'error',
+      message: 'Failed to delete student'
+    });
+  }
+};
