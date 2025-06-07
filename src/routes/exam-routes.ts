@@ -37,7 +37,7 @@ router.get(
 );
 
 // IMPORTANT: Place specific routes BEFORE generic parameterized routes
-router.get('/result/:examId/:userId', protect, getExamResultHandler);
+router.get('/result/:resultId/:userId', protect, getExamResultHandler);
 
 router.get(
   '/take-exam/:examId',
