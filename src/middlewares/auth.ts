@@ -11,7 +11,7 @@ interface UserPayload {
 declare global {
     namespace Express {
         interface Request {
-            currentUser?: UserPayload;
+            isCurrentUser?: UserPayload;
         }
     }
 }
@@ -37,7 +37,7 @@ export const authenticateToken = (
         console.log('Token:', token);
 
         const payload = jwt.verify(token, process.env.JWT_SECRET!) as UserPayload;
-        req.currentUser = payload;
+        req.isCurrentUser = payload;
         next();
     } catch (error) {
         console.error('JWT verification error:', error);

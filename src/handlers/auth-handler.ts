@@ -195,7 +195,9 @@ export const getAllUsersHandler = catchAsync(async (req: Request, res: Response)
   res.status(200).json({
     status: 'success',
     data: usersWithResults,
-      });
+  });
+});
+
 export const deleteAccount = catchAsync(async (req: Request, res: Response) => {
   const userId = Number(req.user?.id);
 
@@ -246,4 +248,5 @@ export const deleteAccount = catchAsync(async (req: Request, res: Response) => {
   res.status(200).json({
     success: true,
     message: 'Account deleted successfully'
+  });
 });
