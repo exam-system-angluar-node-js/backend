@@ -12,9 +12,31 @@ declare global {
   namespace Express {
     interface Request {
       user?: User;
+      currentUser?: User;
     }
   }
 }
+
+export const updateProfile = catchAsync(async (req: Request, res: Response) => {
+  const userId = Number(req.user?.id);
+
+  if (!userId) {
+    return res.status(401).json({ success: false, message: 'User not authenticated' });
+  }
+
+  const { avatar, name, email } = req.body;
+
+  const updatedUser = await prisma.user.update({
+    where: { id: userId },
+    data: {
+      ...(avatar && { avatar }),
+      ...(name && { name }),
+      ...(email && { email }),
+    },
+  });
+
+  res.status(200).json({ success: true, user: updatedUser });
+});
 
 export const currentUser = (
   req: Request,
@@ -129,4 +151,57 @@ export const getUserByIdHandler = catchAsync(async (req: Request, res: Response)
 
   console.log(`Successfully fetched user with ID: ${userId}`);
   res.status(200).json(user);
+});
+
+export const deleteAccount = catchAsync(async (req: Request, res: Response) => {
+  const userId = Number(req.user?.id);
+
+  if (!userId) {
+    throw new BadRequestError('User not authenticated');
+  }
+
+  // Delete all related records first
+  await prisma.$transaction(async (prisma) => {
+    // First get all result IDs for this user
+    const userResults = await prisma.result.findMany({
+      where: { userId },
+      select: { id: true }
+    });
+
+    const resultIds = userResults.map(result => result.id);
+
+    // Delete all user exam answers associated with the user's results
+    await prisma.userExamAnswer.deleteMany({
+      where: {
+        resultId: {
+          in: resultIds
+        }
+      }
+    });
+
+    // Now delete all results associated with the user
+    await prisma.result.deleteMany({
+      where: { userId }
+    });
+
+    // Delete all cheating reports where the user is the student
+    await prisma.cheatingReport.deleteMany({
+      where: { studentId: userId }
+    });
+
+    // Delete all exams created by the user
+    await prisma.exam.deleteMany({
+      where: { userId }
+    });
+
+    // Finally delete the user
+    await prisma.user.delete({
+      where: { id: userId }
+    });
+  });
+
+  res.status(200).json({
+    success: true,
+    message: 'Account deleted successfully'
+  });
 });
