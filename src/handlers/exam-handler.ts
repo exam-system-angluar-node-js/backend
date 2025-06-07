@@ -321,10 +321,10 @@ export const submitExam = catchAsync(async (req: Request, res: Response) => {
 
 export const getExamResultHandler = catchAsync(
   async (req: Request, res: Response) => {
-    const examId = parseInt(req.params.examId);
+    const resultId = parseInt(req.params.resultId);
     const userId = parseInt(req.params.userId);
 
-    if (!userId || !examId) {
+    if (!userId || !resultId) {
       throw new BadRequestError('Valid exam ID and user ID are required');
     }
 
@@ -341,7 +341,7 @@ export const getExamResultHandler = catchAsync(
     const result = await prisma.result.findFirst({
       where: {
         userId: userId,
-        examId: examId,
+        id: resultId,
       },
       include: {
         answers: true,
