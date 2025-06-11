@@ -9,11 +9,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.addQuestionToExam = exports.getExamQuestions = void 0;
+exports.deleteQuestionHandler = exports.editQuestionHandler = exports.addQuestionToExam = exports.getExamQuestions = void 0;
 const index_1 = require("../../generated/prisma/index");
 const catchAsync_1 = require("../utils/catchAsync");
 const bad_request_error_1 = require("../errors/bad-request-error");
 const forbidden_error_1 = require("../errors/forbidden-error");
+const not_found_error_1 = require("../errors/not-found-error");
 const prisma = new index_1.PrismaClient();
 exports.getExamQuestions = (0, catchAsync_1.catchAsync)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b;
@@ -90,5 +91,61 @@ exports.addQuestionToExam = (0, catchAsync_1.catchAsync)((req, res, next) => __a
     res.status(201).json({
         status: 'success',
         message: `${createdQuestions.count} questions added`,
+    });
+}));
+exports.editQuestionHandler = (0, catchAsync_1.catchAsync)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
+    const questionId = parseInt(req.params.questionId);
+    const userId = (_a = req.user) === null || _a === void 0 ? void 0 : _a.id;
+    const updatedQuestionData = req.body;
+    if (!questionId) {
+        throw new bad_request_error_1.BadRequestError('Invalid question id');
+    }
+    const question = yield prisma.question.findUnique({
+        where: { id: questionId },
+        include: { exam: true }
+    });
+    if (!question) {
+        throw new not_found_error_1.NotFoundError();
+    }
+    // Check if the user is the owner of the exam the question belongs to
+    if (question.exam.userId !== userId) {
+        throw new forbidden_error_1.ForbiddenError();
+    }
+    const updatedQuestion = yield prisma.question.update({
+        where: { id: questionId },
+        data: updatedQuestionData,
+    });
+    res.status(200).json({
+        status: 'success',
+        message: 'Question updated successfully',
+        data: updatedQuestion,
+    });
+}));
+exports.deleteQuestionHandler = (0, catchAsync_1.catchAsync)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
+    const questionId = parseInt(req.params.questionId);
+    const userId = (_a = req.user) === null || _a === void 0 ? void 0 : _a.id;
+    if (!questionId) {
+        throw new bad_request_error_1.BadRequestError('Invalid question id');
+    }
+    const question = yield prisma.question.findUnique({
+        where: { id: questionId },
+        include: { exam: true }
+    });
+    if (!question) {
+        throw new not_found_error_1.NotFoundError();
+    }
+    // Check if the user is the owner of the exam the question belongs to
+    if (question.exam.userId !== userId) {
+        throw new forbidden_error_1.ForbiddenError();
+    }
+    yield prisma.question.delete({
+        where: { id: questionId },
+    });
+    res.status(204).json({
+        status: 'success',
+        message: 'Question deleted successfully',
+        data: null
     });
 }));

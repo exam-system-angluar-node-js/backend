@@ -35,12 +35,12 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 6.9.0
- * Query Engine version: 81e4af48011447c3cc503a190e86995b66d2a28e
+ * Prisma Client JS version: 6.7.0
+ * Query Engine version: 3cff47a7f5d65c3ea74883f1d736e41d68ce91ed
  */
 Prisma.prismaVersion = {
-  client: "6.9.0",
-  engine: "81e4af48011447c3cc503a190e86995b66d2a28e"
+  client: "6.7.0",
+  engine: "3cff47a7f5d65c3ea74883f1d736e41d68ce91ed"
 }
 
 Prisma.PrismaClientKnownRequestError = PrismaClientKnownRequestError;
@@ -183,7 +183,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "D:\\ITI MERN\\Angular\\final\\backend\\generated\\prisma",
+      "value": "D:\\ITI Material\\Angular\\Final Project\\backend\\generated\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -194,19 +194,23 @@ const config = {
         "fromEnvVar": null,
         "value": "windows",
         "native": true
+      },
+      {
+        "fromEnvVar": null,
+        "value": "debian-openssl-3.0.x"
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "D:\\ITI MERN\\Angular\\final\\backend\\prisma\\schema.prisma",
+    "sourceFilePath": "D:\\ITI Material\\Angular\\Final Project\\backend\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": "../../.env",
+    "rootEnvPath": null,
     "schemaEnvPath": "../../.env"
   },
   "relativePath": "../../prisma",
-  "clientVersion": "6.9.0",
-  "engineVersion": "81e4af48011447c3cc503a190e86995b66d2a28e",
+  "clientVersion": "6.7.0",
+  "engineVersion": "3cff47a7f5d65c3ea74883f1d736e41d68ce91ed",
   "datasourceNames": [
     "db"
   ],
@@ -220,8 +224,8 @@ const config = {
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id        Int      @id @default(autoincrement())\n  name      String\n  email     String   @unique\n  role      String\n  password  String\n  avatar    String?\n  exams     Exam[]\n  results   Result[]\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n}\n\nmodel Exam {\n  id              Int              @id @default(autoincrement())\n  title           String\n  description     String\n  startDate       DateTime\n  duration        Int\n  category        String\n  status          String           @default(\"active\") @db.VarChar(255)\n  userId          Int\n  user            User             @relation(fields: [userId], references: [id])\n  questions       Question[]\n  results         Result[]\n  cheatingReports CheatingReport[]\n  createdAt       DateTime         @default(now())\n  updatedAt       DateTime         @updatedAt\n}\n\nmodel Question {\n  id      Int      @id @default(autoincrement())\n  title   String\n  options String[]\n  points  Int\n  answer  Int\n  examId  Int\n  exam    Exam     @relation(fields: [examId], references: [id])\n}\n\nmodel Result {\n  id        Int             @id @default(autoincrement())\n  userId    Int\n  examId    Int\n  answers   UserExamAnswer?\n  score     Int\n  passed    Boolean\n  createdAt DateTime        @default(now())\n  user      User            @relation(fields: [userId], references: [id])\n  exam      Exam            @relation(fields: [examId], references: [id])\n}\n\nmodel UserExamAnswer {\n  id       Int    @id @default(autoincrement())\n  resultId Int    @unique\n  answer   String\n\n  result Result? @relation(fields: [resultId], references: [id])\n}\n\nmodel CheatingReport {\n  id           Int      @id @default(autoincrement())\n  studentId    Int\n  examId       Int\n  timestamp    DateTime @default(now())\n  cheatingType String\n  exam         Exam     @relation(fields: [examId], references: [id], onDelete: Cascade)\n}\n",
-  "inlineSchemaHash": "bdd7929499fbc9b6ce5de9a92bd8cd9f3cc4eacffd008783fa58e89b4cbd718e",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider      = \"prisma-client-js\"\n  output        = \"../generated/prisma\"\n  binaryTargets = [\"native\", \"debian-openssl-3.0.x\"]\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id        Int      @id @default(autoincrement())\n  name      String\n  email     String   @unique\n  role      String\n  password  String\n  avatar    String?\n  exams     Exam[]\n  results   Result[]\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n}\n\nmodel Exam {\n  id              Int              @id @default(autoincrement())\n  title           String\n  description     String\n  startDate       DateTime\n  duration        Int\n  category        String\n  status          String           @default(\"active\") @db.VarChar(255)\n  userId          Int\n  user            User             @relation(fields: [userId], references: [id])\n  questions       Question[]\n  results         Result[]\n  cheatingReports CheatingReport[]\n  createdAt       DateTime         @default(now())\n  updatedAt       DateTime         @updatedAt\n}\n\nmodel Question {\n  id      Int      @id @default(autoincrement())\n  title   String\n  options String[]\n  points  Int\n  answer  Int\n  examId  Int\n  exam    Exam     @relation(fields: [examId], references: [id])\n}\n\nmodel Result {\n  id        Int             @id @default(autoincrement())\n  userId    Int\n  examId    Int\n  answers   UserExamAnswer?\n  score     Int\n  passed    Boolean\n  createdAt DateTime        @default(now())\n  user      User            @relation(fields: [userId], references: [id])\n  exam      Exam            @relation(fields: [examId], references: [id])\n}\n\nmodel UserExamAnswer {\n  id       Int    @id @default(autoincrement())\n  resultId Int    @unique\n  answer   String\n\n  result Result? @relation(fields: [resultId], references: [id])\n}\n\nmodel CheatingReport {\n  id           Int      @id @default(autoincrement())\n  studentId    Int\n  examId       Int\n  timestamp    DateTime @default(now())\n  cheatingType String\n  exam         Exam     @relation(fields: [examId], references: [id], onDelete: Cascade)\n}\n",
+  "inlineSchemaHash": "e149f847c9cd10089f44fd2bb458075909df9a6f1fdb1c4ef0a847f1a678bb9e",
   "copyEngine": true
 }
 config.dirname = '/'

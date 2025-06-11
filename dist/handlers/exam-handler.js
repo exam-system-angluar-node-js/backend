@@ -20,7 +20,7 @@ var __rest = (this && this.__rest) || function (s, e) {
     return t;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getExamResultHandler = exports.submitExam = exports.takeExamHandler = exports.getExamById = exports.editExamHandler = exports.createNewExamHandler = exports.getAllTeacherExamsHandler = exports.getAllExamsHandler = void 0;
+exports.deleteExamHandler = exports.getExamResultHandler = exports.submitExam = exports.takeExamHandler = exports.getExamById = exports.editExamHandler = exports.createNewExamHandler = exports.getAllTeacherExamsHandler = exports.getAllExamsHandler = void 0;
 const catchAsync_1 = require("../utils/catchAsync");
 const index_1 = require("../../generated/prisma/index");
 const not_found_error_1 = require("../errors/not-found-error");
@@ -86,15 +86,17 @@ exports.createNewExamHandler = (0, catchAsync_1.catchAsync)((req, res) => __awai
     var _a;
     const { title, description, startDate, duration, category } = req.body;
     const userId = (_a = req.user) === null || _a === void 0 ? void 0 : _a.id;
+    if (!userId) {
+        throw new bad_request_error_1.BadRequestError('User not authenticated');
+    }
     const examData = {
         title,
         description,
         startDate,
         duration,
         category,
+        userId
     };
-    if (userId !== undefined)
-        examData.userId = userId;
     const newExam = yield prisma.exam.create({
         data: examData,
     });
@@ -137,12 +139,20 @@ exports.editExamHandler = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(v
 exports.getExamById = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     const examId = parseInt(req.params.examId);
+    console.log(`Attempting to fetch exam with ID: ${examId}`);
+    if (isNaN(examId)) {
+        console.log('Invalid exam ID provided.');
+        throw new bad_request_error_1.BadRequestError('Invalid exam ID');
+    }
     const exam = yield prisma.exam.findUnique({
         where: { id: examId },
         include: { questions: true },
     });
-    if (!exam)
+    if (!exam) {
+        console.log(`Exam with ID ${examId} not found in database.`);
         throw new not_found_error_1.NotFoundError();
+    }
+    console.log(`Successfully fetched exam with ID: ${examId}`);
     // Remove answers for students
     if (((_a = req.user) === null || _a === void 0 ? void 0 : _a.role) === 'student') {
         const examWithoutAnswers = Object.assign(Object.assign({}, exam), { questions: exam.questions.map((question) => {
@@ -153,21 +163,6 @@ exports.getExamById = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 
     }
     res.status(200).json(exam);
 }));
-// export const getExamById = catchAsync(async (req: Request, res: Response) => {
-//   const examId = parseInt(req.params.examId);
-//   const userId = req.user?.id;
-//   const exam = await prisma.exam.findUnique({
-//     where: { id: examId },
-//     include: { questions: true },
-//   });
-//   if (!exam) {
-//     throw new NotFoundError();
-//   }
-//   if (userId === undefined) {
-//     throw new BadRequestError('Provide valid user id');
-//   }
-//   res.status(200).json(exam);
-// });
 exports.takeExamHandler = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     const examId = parseInt(req.params.examId);
@@ -249,15 +244,17 @@ exports.submitExam = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 0
     if (!submittedAnswers || typeof submittedAnswers !== 'object') {
         throw new bad_request_error_1.BadRequestError('Answers must be provided in the correct format.');
     }
-    let score = 0;
-    let totalPoints = 0;
+    let correctAnswers = 0;
+    const totalQuestions = (exam === null || exam === void 0 ? void 0 : exam.questions.length) || 0;
     exam === null || exam === void 0 ? void 0 : exam.questions.forEach((question) => {
-        totalPoints += question.points;
         if (submittedAnswers[question.id] === question.answer) {
-            score += question.points;
+            correctAnswers++;
         }
     });
-    const passed = score >= totalPoints * 0.6;
+    // Calculate percentage score (0-100)
+    // Example: 8 correct out of 10 questions = (8/10) * 100 = 80
+    const score = totalQuestions > 0 ? Math.round((correctAnswers / totalQuestions) * 100) : 0;
+    const passed = score >= 60; // Pass if score is 60% or higher
     const updatedResult = yield prisma.result.update({
         where: { id: resultId },
         data: {
@@ -281,9 +278,9 @@ exports.submitExam = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 0
 // Add this handler to your exam-handler.ts file
 exports.getExamResultHandler = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b, _c;
-    const examId = parseInt(req.params.examId);
+    const resultId = parseInt(req.params.resultId);
     const userId = parseInt(req.params.userId);
-    if (!userId || !examId) {
+    if (!userId || !resultId) {
         throw new bad_request_error_1.BadRequestError('Valid exam ID and user ID are required');
     }
     // Check if the user requesting is the same as the result owner or an admin/teacher
@@ -296,7 +293,7 @@ exports.getExamResultHandler = (0, catchAsync_1.catchAsync)((req, res) => __awai
     const result = yield prisma.result.findFirst({
         where: {
             userId: userId,
-            examId: examId,
+            id: resultId,
         },
         include: {
             answers: true,
@@ -326,3 +323,50 @@ exports.getExamResultHandler = (0, catchAsync_1.catchAsync)((req, res) => __awai
         data: result,
     });
 }));
+const deleteExamHandler = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { examId } = req.params;
+    try {
+        // First, delete all related records
+        yield prisma.userExamAnswer.deleteMany({
+            where: {
+                result: {
+                    examId: parseInt(examId)
+                }
+            }
+        });
+        yield prisma.result.deleteMany({
+            where: {
+                examId: parseInt(examId)
+            }
+        });
+        yield prisma.question.deleteMany({
+            where: {
+                examId: parseInt(examId)
+            }
+        });
+        // Delete cheating reports
+        yield prisma.cheatingReport.deleteMany({
+            where: {
+                examId: parseInt(examId)
+            }
+        });
+        // Finally, delete the exam
+        const deletedExam = yield prisma.exam.delete({
+            where: {
+                id: parseInt(examId)
+            }
+        });
+        res.status(200).json({
+            status: 'success',
+            data: deletedExam
+        });
+    }
+    catch (error) {
+        console.error('Error deleting exam:', error);
+        res.status(400).json({
+            status: 'fail',
+            message: 'Failed to delete exam'
+        });
+    }
+});
+exports.deleteExamHandler = deleteExamHandler;

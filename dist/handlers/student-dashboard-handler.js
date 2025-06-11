@@ -30,7 +30,12 @@ exports.getDashboardStatsHandler = (0, catchAsync_1.catchAsync)((req, res) => __
     }
     // Get total active exams
     const totalExams = yield prisma.exam.count({
-        where: { status: 'active' },
+        where: {
+            status: 'active',
+            questions: {
+                some: {} // Only count exams that have at least one question
+            }
+        },
     });
     // Get completed exams and results for the student
     const completedResults = yield prisma.result.findMany({
@@ -63,8 +68,8 @@ exports.getDashboardStatsHandler = (0, catchAsync_1.catchAsync)((req, res) => __
     const dashboardStats = {
         totalExams,
         completedExams,
-        averageScore: averageScore.toFixed(1),
-        passRate: passRate.toFixed(1),
+        averageScore: Number(averageScore.toFixed(1)),
+        passRate: Number(passRate.toFixed(1)),
         totalQuestions,
         correctAnswers,
     };
@@ -186,9 +191,7 @@ exports.getCategoryPerformanceHandler = (0, catchAsync_1.catchAsync)((req, res) 
         const averageScore = scores.reduce((sum, score) => sum + score, 0) / scores.length;
         categoryPerformance[category] = Math.round(averageScore);
     });
-    // Sort by performance (highest first)
-    const sortedPerformance = Object.fromEntries(Object.entries(categoryPerformance).sort(([, a], [, b]) => b - a));
-    res.json(sortedPerformance);
+    res.json(categoryPerformance);
 }));
 // GET /api/v1/students/dashboard/performance/:studentId
 exports.getPerformanceDataHandler = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 0, void 0, void 0, function* () {

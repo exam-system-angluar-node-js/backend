@@ -12,8 +12,10 @@ const create_question_validation_1 = require("../utils/create-question-validatio
 const validateRequest_1 = require("../middlewares/validateRequest");
 const router = express_1.default.Router();
 exports.QuestionRouter = router;
+router.use(protect_1.protect, (0, restricto_1.restrictTo)('teacher', 'admin'));
 router
     .route('/:examId')
-    .get(protect_1.protect, question_handler_1.getExamQuestions) // Allow all authenticated users (students, teachers, admins)
-    .post(protect_1.protect, (0, restricto_1.restrictTo)('teacher', 'admin'), // Only teachers/admins can add questions
-create_question_validation_1.createQuestionValidation, validateRequest_1.validateRequest, question_handler_1.addQuestionToExam);
+    .get(question_handler_1.getExamQuestions) // Handled by protect and restrictTo above
+    .post(create_question_validation_1.createQuestionValidation, validateRequest_1.validateRequest, question_handler_1.addQuestionToExam);
+router.patch('/:questionId', question_handler_1.editQuestionHandler);
+router.delete('/:questionId', question_handler_1.deleteQuestionHandler);

@@ -19,11 +19,12 @@ router
     .post(protect_1.protect, (0, restricto_1.restrictTo)('teacher', 'admin'), createExamValidation_1.createExamValidations, validateRequest_1.validateRequest, exam_handler_1.createNewExamHandler);
 router.get('/teacher', protect_1.protect, (0, restricto_1.restrictTo)('teacher', 'admin'), exam_handler_1.getAllTeacherExamsHandler);
 // IMPORTANT: Place specific routes BEFORE generic parameterized routes
-router.get('/result/:examId/:userId', protect_1.protect, exam_handler_1.getExamResultHandler);
+router.get('/result/:resultId/:userId', protect_1.protect, exam_handler_1.getExamResultHandler);
 router.get('/take-exam/:examId', protect_1.protect, (0, restricto_1.restrictTo)('student'), exam_handler_1.takeExamHandler);
 router.post('/submit/:resultId', protect_1.protect, (0, restricto_1.restrictTo)('student'), exam_handler_1.submitExam);
 // Generic routes should come AFTER specific ones
 router
     .route('/:examId')
     .get(protect_1.protect, exam_handler_1.getExamById) // Accessible to all authenticated users
-    .patch(protect_1.protect, (0, restricto_1.restrictTo)('teacher'), edit_exam_validation_1.validateEditExam, validateRequest_1.validateRequest, exam_handler_1.editExamHandler);
+    .patch(protect_1.protect, (0, restricto_1.restrictTo)('teacher', 'admin'), edit_exam_validation_1.validateEditExam, validateRequest_1.validateRequest, exam_handler_1.editExamHandler)
+    .delete(protect_1.protect, (0, restricto_1.restrictTo)('teacher', 'admin'), exam_handler_1.deleteExamHandler);

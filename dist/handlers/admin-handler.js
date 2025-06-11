@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getRecentResultsHandler = exports.getExamResultsHandler = exports.getDashboardStatsHandler = void 0;
+exports.deleteStudentHandler = exports.getRecentResultsHandler = exports.getExamResultsHandler = exports.getDashboardStatsHandler = void 0;
 const catchAsync_1 = require("../utils/catchAsync");
 const index_1 = require("../../generated/prisma/index");
 // import { AppError } from '../errors/appError';
@@ -212,3 +212,37 @@ exports.getRecentResultsHandler = (0, catchAsync_1.catchAsync)((req, res) => __a
         });
     }
 }));
+const deleteStudentHandler = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { studentId } = req.params;
+    try {
+        // Delete all related records first
+        yield prisma.cheatingReport.deleteMany({
+            where: { studentId: parseInt(studentId) }
+        });
+        yield prisma.userExamAnswer.deleteMany({
+            where: {
+                result: {
+                    userId: parseInt(studentId)
+                }
+            }
+        });
+        yield prisma.result.deleteMany({
+            where: { userId: parseInt(studentId) }
+        });
+        // Finally delete the user
+        yield prisma.user.delete({
+            where: { id: parseInt(studentId) }
+        });
+        res.status(200).json({
+            status: 'success',
+            message: 'Student and all related data deleted successfully'
+        });
+    }
+    catch (error) {
+        res.status(400).json({
+            status: 'error',
+            message: 'Failed to delete student'
+        });
+    }
+});
+exports.deleteStudentHandler = deleteStudentHandler;
