@@ -15,5 +15,6 @@ router.get('/dashboard/stats/:teacherId', admin_handler_1.getDashboardStatsHandl
 router.get('/dashboard/exam-results', admin_handler_1.getExamResultsHandler);
 router.get('/dashboard/exam-results/:examId', admin_handler_1.getExamResultsHandler);
 router.get('/dashboard/recent-results', admin_handler_1.getRecentResultsHandler);
-// ADD THIS MISSING ROUTE:
 router.get('/dashboard/recent-results/:examId', admin_handler_1.getRecentResultsHandler);
+// Add delete student route
+router.delete('/students/:studentId', admin_handler_1.deleteStudentHandler);
